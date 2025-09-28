@@ -1,0 +1,47 @@
+<form method="post" action="reservation" id="Form_create_reservation">
+    <fieldset>
+        <legend>Inscription</legend>
+        <div class="form">
+            <p>
+                <label for="short">Short</label>
+                <input type="radio" name="size" id="short" value="short" />
+                <label for="long">Long</label>
+                <input type="radio" name="size" id="long" value="long" />
+            </p>
+            <p>
+                <label for="catwayNumber">Numero du catway: 2</label>
+                <select>
+                    <option>1</option>
+                    <option disabled>2</option>
+                    <option>3</option>
+                </select required>                
+            </p>
+            <p>
+                <label for="clientName">Nom: Michel !</label>
+                <input type="text" name="clientName" id="clientName" placeholder="Le nom !" required />
+            </p>
+            <p>
+                <label for="boatName">Nom du bateau: L'alizée</label>
+                <input type="text" name="boatName" id="boatName" placeholder="Le nom du bateau !" required />
+            </p>
+            <p>
+                <label for="startDate">Date de début</label>
+                <input type="date" name="startDate" id="startDate" required />
+            </p>
+            <p>
+                <label for="endDate">Date de fin</label>
+                <input type="date" name="endDate" id="endDate" required />
+            </p>
+            <p>
+                <button type="submit">Ajouter</button>
+            </p>
+        </div>
+    </fieldset>
+</form>
+<script>
+    //remplisage du select de numéro de catway dispo
+    //créé un bouton radio pour sélectionner la taille du catway et crée une liste en fonction du radio choisit
+    //récupéré les numéro de catway déja réservé et les mettre sur disabled et en couleur rouge
+    //mettre ceux disponible en vert 
+    //si tout est réservé notifier que tout les emplacement sont pris
+</script>

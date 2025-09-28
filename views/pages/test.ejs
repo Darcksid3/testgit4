@@ -1,0 +1,52 @@
+<% email = typeof email !=='undefined' ? email : 'louper@louper.net' %>
+<% id = typeof id !=='undefined' ? id : '1234' %>
+
+<h2>pages de test</h2>
+
+<form id="Form_find_one_users">
+    <fieldset>
+        <legend>Recherché un Utilisateur</legend>
+        <p>
+            <label for="idFind-select">idFind</label>
+            <select name="idFind" id="idFind-select"></select>
+        </p>
+        
+        <p>
+            <label for="email">Email: test@test.com</label>
+            <input type="email" name="email" id="email" placeholder="L'email !" required />
+        </p>
+
+        <p>
+            <button type="submit">Rechercher l'utilisateur</button>
+        </p>
+        
+    </fieldset>
+</form>
+<p>
+    <input type="password" id="test_mdp"> <img src="images/oeil.png" style="width: 20px; height: 20px;" alt="afficher le champ" onclick="afficheMdp('test_mdp')">
+</p>
+
+<div id="resultat" class="resultat">
+    <%= email %>
+</div>
+<button onclick="randomMdpGen('test_mdp')">genmdp</button>
+
+<script>
+    const selectElement = document.querySelector('select');
+    const idArray = [1,2,3,4,5,6,8,9,10];
+    console.log(selectElement)
+    for (let i = 0; i < idArray.length; i++) {
+        let x = i+1
+        const optionElement =  document.createElement('option');
+        
+        console.log(i)
+        console.log(optionElement)
+        
+        optionElement.innerText=idArray[i]
+        optionElement.setAttribute('value', idArray[i])
+        //optionElement.value = x;
+        //optionElement.innerText =x;
+        selectElement.appendChild(optionElement)
+    }
+
+</script>

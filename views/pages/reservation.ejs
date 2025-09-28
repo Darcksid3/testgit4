@@ -1,0 +1,66 @@
+<% visite = typeof visite !=='undefined' ? visite : '0' %>
+
+<div class="conteneur">
+  <%- include('../partials/menu') -%>
+
+  <div class="dashcenter">
+    <!-- Tableau de bord utilisateur MENU -->
+    <nav class="navuser">
+      <a href="/reservation?page=findAllReserv">Affiché</a>
+      <a href="/reservation?page=findOneReserv">Recherché</a>
+      <a href="/reservation?page=createReserv">Ajouter</a>
+      <!-- modifier et supprimer a inclure dans la page d'utilisteur unique -->
+      <a href="/modify">modifier</a>
+      <a href="/delete">Supprimer</a>
+    </nav>
+    
+    <!-- Fin du menu du tableau de bord utilisateur -->
+    <section class="section">
+      <!-- partie visite pour controle de la gestion des sessions -->
+      <h2>Reservation visite : <%= session.visit %></h2>
+      <div>
+        <% if (typeof session.email !=='undefined') { %>
+          <p>Bienvenue <%= session.email %></p>
+        <% } else { %>
+          <p class="errmess">email manquant</p> 
+        <% } %>
+      </div>
+
+      <!-- Affichage du centre de la page-->
+      <div>
+        <% if (typeof session.page !== 'undefined') { %>
+          <% if (session.page === 'findAllReserv') { %>
+            <div>
+              <p>Afficher toutes les réservations</p>
+            </div>
+          <% } else if (session.page === 'findOneReserv') { %>
+            <div>
+              <%- include('../partials/reservation/Form_find_reservation') -%>
+            </div>
+          <% } else if (session.page === 'createReserv') { %>
+            <div>
+              <%- include('../partials/reservation/Form_create_reservation') -%>
+            </div>
+          <% } %>
+        <% } else { %>
+          <p class="errmess">Variable page manquante</p>
+        <% } %>
+      </div>
+      <!-- affichage de lredervation demandé -->
+      <% if (typeof afficheReservation !== 'undefined') {  %>
+        <div> 
+          <%= afficheReservation %>
+        </div>
+      <%  } %>
+        
+    </section>
+
+  </div>
+  <aside class="aside">
+        <p>Aside reservation Layout</p>
+        <p>visite : <%= session.visit %></p>
+        <p>page = <%= session.page %></p>
+        <p>email = <%= session.email %></p>
+   
+  </aside>
+</div>

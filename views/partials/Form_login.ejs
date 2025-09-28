@@ -1,0 +1,19 @@
+<form id="form_login" method="post" action="login">
+    <fieldset>
+        <legend>Connexion</legend>
+        <div class="form">
+            <p>
+                <label for="email">Email: test@test.com</label>
+                <input type="email" name="email" id="email" placeholder="Votre email !" required />
+            </p>
+            <p>
+                <label for="password">Mot de passe: 1234</label>
+                <input type="password" name="password" id="login_password" required />
+                <img src="images/oeil.png" style="width: 20px; height: 20px;" alt="afficher le champ" onclick="afficheMdp('login_password')">
+            </p>
+            <p>
+                <button type="submit">Se connecter</button>
+            </p>
+        </div>
+    </fieldset>
+</form>

@@ -1,0 +1,12 @@
+
+<% visite = typeof visite !=='undefined' ? visite : '0' %>
+<% userTab.email = typeof userTab.email !=='undefined' ? userTab.email : 'pas d'email' %>
+<% userTab.name = typeof userTab.name !=='undefined' ? userTab.name : 'pas de nom' %>
+<% userTab.password = typeof userTab.password !=='undefined' ? userTab.password : 'pas de mot de passe' %>
+
+
+<div>
+    <p>email : <%= userTab.email %></p>
+    <p>nom : <%= userTab.name %></p>
+    <p>password : <%= userTab.password %></p>
+</div>

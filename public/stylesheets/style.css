@@ -1,0 +1,127 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+footer{
+  padding: 15px;
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: rgba(148,212,245,60%); 
+  color:black;
+}
+header {
+  background-color: rgba(148,212,245,60%); 
+  color:black;
+  border-bottom: black 2px solid;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+
+}
+header img{
+  width: 150px;
+  height: 150px;
+
+}
+footer {
+  border-top: black 2px solid;
+}
+h2 {
+  background-color: burlywood;
+  border-radius: 20px;
+  padding: 10px;
+}
+.conteneur {
+  display: flex;
+  flex-direction: row;
+}
+.dashcenter {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.nav {
+  padding-left: 15px;
+  display: flex;
+  flex-direction: column;
+  min-width: 20%;
+  background-color: rgba(141,180,252,60%);
+  border-right: darkgray 2px dashed;
+}
+.nav a {
+  color: black;
+  text-transform: uppercase;
+  font-weight: 600;
+  text-decoration: none;
+}
+.nav a:hover{
+  font-weight: bolder;
+  font-style: italic;
+  text-decoration: underline;
+}
+.navuser{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  background-color: rgba(141,180,252,90%);
+  border-bottom: darkgray 2px dashed;
+  padding: 20px;
+}
+
+.navuser a{
+  color: white;
+  background-color: dimgray;
+  padding: 10px;
+  border-radius: 20px 20px;
+  border-color: black;
+  font-weight: bold;
+}
+.section {
+  display:flex;
+  flex-direction: column;
+  margin: auto;
+  align-items: center;
+  width: 50%;
+}
+.accueil {
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  margin: auto;
+  margin-bottom: 20px;
+}
+.aside {
+  display: flex;
+  flex-direction: column;
+  min-width: 20%;
+  background-color: rgba(141,180,252,60%);
+  border-left: darkgray 2px dashed;
+}
+.form {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+.errmess {
+  color:red;
+  font-weight: bold;
+}
+label {
+  font-weight: 700;
+}
+.form-create-user {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  border: red 1px solid;
+  width:50%
+}
+#form_login{
+  display: none;
+
+}
+.description {
+  width: 50%;
+}

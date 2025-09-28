@@ -1,0 +1,25 @@
+<form method="post" action="users" id="Form_add_users">
+    <fieldset>
+        <legend>Inscription</legend>
+        <div class="form">
+            <p>
+                <label for="name">Nom: Michel !</label>
+                <input type="text" name="name" id="name" placeholder="Votre nom !" required />
+            </p>
+            <p>
+                <label for="email">Email: test@test.com</label>
+                <input type="email" name="email" id="email" placeholder="Votre email !" required />
+            </p>
+            <p>
+                <label for="password">Mot de passe: 1234</label>
+                <input type="password" name="password" id="create_password" required />
+                <img src="images/oeil.png" style="width: 20px; height: 20px;" alt="afficher le champ" onclick="afficheMdp('create_password')">
+                <p style="background-color: rgb(147, 147, 236);" onclick="randomMdpGen('create_password')">Généré un mot de passe</p>
+                
+            </p>
+            <p>
+                <button type="submit">Ajouter</button>
+            </p>
+        </div>
+    </fieldset>
+</form>
