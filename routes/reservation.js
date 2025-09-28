@@ -46,4 +46,27 @@ router.get('/:id', async (req,res,next) => {
   res.status(200).render('pages/reservation', {session: session, idFind : idFind})
 });
 
+router.post('/', async (req,res,next) => {
+  //récupération de la session
+  C.log('green', `Début route post`);
+  session = req.session;
+  session.page = 'createReserv';
+  //récupération des donnée du formulaire
+  const size = req.body.size;
+  C.log('magenta', size);
+  const catNumber = req.body.catwayNumber;
+  C.log('magenta', catNumber);
+  const clientName = req.body.clientName;
+  C.log('magenta', clientName);
+  const boatName = req.body.boatName;
+  C.log('magenta', boatName);
+  const startDate = req.body.startDate;
+  C.log('magenta', startDate);
+  const endDate = req.body.endDate;
+  C.log('magenta', endDate);
+
+
+  res.status(201).render('pages/reservation', { session: session })
+});
+
 module.exports = router;

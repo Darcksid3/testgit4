@@ -39,8 +39,8 @@
         let x = i+1
         const optionElement =  document.createElement('option');
         
-        console.log(i)
-        console.log(optionElement)
+        //console.log(i)
+        //console.log(optionElement)
         
         optionElement.innerText=idArray[i]
         optionElement.setAttribute('value', idArray[i])
@@ -50,3 +50,41 @@
     }
 
 </script>
+
+<hr>
+<p id="p-startDate"></p>
+<p id="p-endDate"></p>
+</div>
+<script>
+    // récupération des champs
+    const pStartDateElement = document.getElementById('p-startDate')
+    const pEndtDateElement = document.getElementById('p-endDate')
+    
+    //définition des minimales
+    const dte = new Date();
+    
+    let minYear = new Intl.DateTimeFormat("fr-FR", {year:"numeric"})
+    minYear = minYear.format(dte)
+    
+    let minMonth = new Intl.DateTimeFormat("fr-FR", {month:"numeric"})
+    minMonth = minMonth.format(dte)
+    if(minMonth < 10){ minMonth = '0' + minMonth } // si inferrieur a 10 ajoute un 0 pour etre au format
+    
+    let minDay = new Intl.DateTimeFormat("fr-FR", {day:"numeric"})
+    minDay = minDay.format(dte)
+    if(minDay < 10){ minDay = '0' + minDay } // si inferrieur a 10 ajoute un 0 pour etre au format
+    
+    let minDate = `${minYear}-${minMonth}-${minDay}`
+    // injexion dans les champs
+    pStartDateElement.innerHTML = `
+        <label for="startDate">Date de début</label>
+        <input type="date" name="startDate" id="startDate" min="${minDate}" value="${minDate}" required/>
+        `
+    pEndtDateElement.innerHTML= `
+        <label for="endDate">Date de fin</label>
+        <input type="date" name="endDate" id="endDate" min="${minDate}" value="${minDate}" required />
+        `
+</script>
+
+
+

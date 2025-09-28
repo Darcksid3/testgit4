@@ -7,9 +7,9 @@
     <div class="dashcenter">
       <!-- Tableau de bord utilisateur MENU -->
       <nav class="navuser">
-        <a href="/catways">Affiché</a>
-        <a href="/catways">Recherché</a>
-        <a href="/catways">Ajouter</a>
+        <a href="/catways?page=findAllCatway">Affiché tout les catways</a>
+        <a href="/catways?page=findOneCatway">Recherché un catway</a>
+        <a href="/catways?page=createCatway">Ajouter un catway</a>
         <!-- modifier et supprimer a inclure dans la page d'utilisteur unique -->
         <a href="/modify">modifier</a>
         <a href="/delete">Supprimer</a>
@@ -29,7 +29,23 @@
 
         <!-- Affichage du centre de la page-->
         <div >
-
+          <% if (typeof session.page !== 'undefined') { %>
+          <% if (session.page === 'findAllCatway') { %>
+            <div>
+              <p>Afficher toutes les réservations</p>
+            </div>
+          <% } else if (session.page === 'findOneCatway') { %>
+            <div>
+              <%- include('../partials/catway/Form_find_catway') -%>
+            </div>
+          <% } else if (session.page === 'createCatway') { %>
+            <div>
+              <%- include('../partials/catway/Form_create_catway') -%>
+            </div>
+          <% } %>
+        <% } else { %>
+          <p class="errmess">Variable page manquante</p>
+        <% } %>
         </div>
         <!-- affichage de l'email demandé -->
         <% if (typeof afficheCatway !== 'undefined') {  %>

@@ -10,12 +10,15 @@ ainsi qu'un tableau de bord pour l'administration.
 ## Feuille de route
 :x: !!Section en cours!!
 1. Gestion des utilisateurs
+    - :white_check_mark: Ajout des nouveau utilisateur dans la BD
 2. Gestion des catways
 3. Gestion des réservations
 
 ### Status
 - :white_check_mark: Serveur fonctionnel.
 - :white_check_mark: Options de base de gestion d'utilisateur.
+- :white_check_mark: Options de base de gestion de catway.
+- :white_check_mark: Options de base de gestion de reservation.
 
 ## Installation
 cloner le repo.\
@@ -44,12 +47,16 @@ for users, docks, and reservations, as well as an administration dashboard.
 ## Roadmap
 :x: !!In Progress!!
 1. User's system
+    - :white_check_mark: Add new user in DB
 2. Catway's system
 3. Reservation's system
 
 ### Status
 - :white_check_mark: Server On
 - :white_check_mark: Simple users system
+- :white_check_mark: Simple catway system.
+- :white_check_mark: Simple reservation system.
+
 
 ## Instalation
 Clone repos.\

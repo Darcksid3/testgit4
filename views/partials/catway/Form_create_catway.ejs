@@ -1,0 +1,42 @@
+<h2>Form create catway</h2>
+<form method="post" action="catways" id="Form_create_catway">
+    <fieldset>
+        <legend>Création d'un catway</legend>
+        <div class="form">
+            <p>
+                <label for="catwayNumber" id="label-catwayNumber"></label>
+                <input type="hidden" name="catwayNumber" id="catwayNumber" required />        
+            </p>
+            <p>
+                <label for="short">Short</label>
+                <input type="radio" name="size" id="short" value="short" />
+                <label for="long">Long</label>
+                <input type="radio" name="size" id="long" value="long" />
+            </p>
+
+            <p>
+                <label for="description">Description</label>
+                <textarea name="catwayState" id="catwayState" placeholder="Description de son état" required></textarea>
+            </p>
+            <p>
+                <button type="submit">Ajouter</button>
+            </p>
+        </div>
+    </fieldset>
+</form>
+
+<script>
+    // incrémentation automatique de l'id
+    const idArray = [1,2,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24];
+    let number = idArray.length + 2;
+    const catwayNumberElement = document.getElementById('catwayNumber');
+    catwayNumberElement.value = number;
+    const labelCatwayNumberElement = document.getElementById('label-catwayNumber');
+    labelCatwayNumberElement.innerText = `catway numéro ${number}`;
+
+    
+
+
+</script>
+
+

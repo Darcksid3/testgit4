@@ -23,32 +23,27 @@ function afficheForm() {
  */
 
 function randomMdpGen(champ_mdp) {
-  console.log('click :')
+  const minuscule = "abcdefghijklmnopqrstuvwxyz";
+  const majuscule = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  const chiffre = "1234567890";
+  const symbole = "&~#{([-|_\\^@)=+$]}*%!/:.;?,";
+  const allChars = minuscule + majuscule + chiffre + symbole;
+
+  const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[&~#{(|\\\^@)=+$}%!/:.;?,])(.{10,})$/;
+  
   let genMdp = '';
-  //déclaration des valeurs possible
-  const minuscule = "abcdefghijklmnopqrstuvwxyz".split("");
-  const majuscule = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
-  const chiffre = "1234567890".split("");
-  const symbole = "&~#{([-|_\\^@)=+$]}*%!/:.;?,".split("");
+  const minLength = 10;
   
-  const size = 10;
-  
-  for (let i=0; i<size; i++) {
-    //console.log(i)
-    let rnd_min = minuscule[Math.floor(Math.random()*minuscule.length)];
-    let rnd_maj = majuscule[Math.floor(Math.random()*majuscule.length)];
-    let rnd_chi = chiffre[Math.floor(Math.random()*chiffre.length)];
-    let rnd_sym = symbole[Math.floor(Math.random()*symbole.length)];
-    const option = [rnd_min, rnd_maj, rnd_chi, rnd_sym]; 
-    let rnd_opt = option[Math.floor(Math.random()*option.length)];
-    //console.log(rnd_opt)
-    
-    genMdp += rnd_opt
+  while (!regex.test(genMdp)) {
+    genMdp = ''; // On réinitialise si la condition n'est pas remplie
+    for (let i = 0; i < minLength; i++) {
+      genMdp += allChars.charAt(Math.floor(Math.random() * allChars.length));
+    }
   }
-  console.log(`mdp gen => ${genMdp}`)
   const resultat = document.getElementById(champ_mdp)
-  resultat.value = genMdp; 
-};
+  resultat.value = genMdp
+  
+}
 
 /**
  * Use to display value of input password 

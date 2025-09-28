@@ -18,12 +18,11 @@ router.get('/', function (req, res, next) {
     res.status(401).redirect('/')
   }
 
-  /* A implémenté au moment du travaill dessus
   //récupération de la page
   session.page = req.query.page;
   //switch des pages à afficher
   C.page(session.page);
-  */
+  
   
   //vérification de la présence d'un email en session
   if (session.email !== undefined){
@@ -37,5 +36,40 @@ router.get('/', function (req, res, next) {
 
 });
 
+router.get('/:id', async (req,res,next) => {
+  // récupération de la session
+  session = req.session;
+  session.page = 'findOneCatway'
+  // récupération de l'email
+  let idFind = await req.params.id;
+  // débug affichage de l'email
+  C.log('yellow', idFind)
+  
+  res.status(200).render('pages/catways', {session: session, idFind : idFind})
+});
+
+router.post('/', async (req,res,next) => {
+  //récupération de la session
+  C.log('green', `Début route post`);
+  session = req.session;
+  session.page = 'createCatway';
+  //récupération des donnée du formulaire
+  const size = req.body.size;
+  C.log('magenta', size);
+  const catNumber = req.body.catwayNumber;
+  C.log('magenta', catNumber);
+  const catState = req.body.catwayState;
+  C.log('magenta', catState);
+
+  const fullInfo = {
+    size: size,
+    catNumber: catNumber,
+    catState: catState
+  };
+
+
+
+  res.status(201).render('pages/catways', { session: session, fullInfo: fullInfo })
+});
 
 module.exports = router;

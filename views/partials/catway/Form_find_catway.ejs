@@ -1,0 +1,22 @@
+<h2>Form find catway</h2>
+<form id="Form_find_one_catway">
+    <fieldset>
+        <legend>Recherché un catway</legend>
+        
+        <p>
+            <label for="idFind-select">id: 2</label>
+            <select name="idFind" id="idFind-select">
+            </select required>
+        </p>
+
+        <p>
+            <button type="submit">Rechercher le catway</button>
+        </p>
+        
+    </fieldset>
+</form>
+<div id="resultat" class="resultat">
+    <% idFind = typeof idFind !=='undefined' ? idFind : '0000000000' %>
+    <%= idFind %>
+</div>
+<script src="/javascripts/cat_find_form.js"></script>
