@@ -27,7 +27,7 @@ router.get('/', function (req, res, next) {
   //vérification de la présence d'un email en session
   if (session.email !== undefined){
     C.log('green', `ouverture page catways if req.session.email => ${session.email}`)
-    res.status(200).render('pages/catways', { session: session, visite: session.visit, email: session.email, page: session.page });
+    res.status(200).render('pages/catways', { session: session });
 
   } else {
     C.log('red', `ouverture page catways else req.session.email => ${session.email}`)
@@ -54,22 +54,13 @@ router.post('/', async (req,res,next) => {
   session = req.session;
   session.page = 'createCatway';
   //récupération des donnée du formulaire
-  const size = req.body.size;
-  C.log('magenta', size);
   const catNumber = req.body.catwayNumber;
   C.log('magenta', catNumber);
+  const size = req.body.size;
+  C.log('magenta', size);
   const catState = req.body.catwayState;
   C.log('magenta', catState);
-
-  const fullInfo = {
-    size: size,
-    catNumber: catNumber,
-    catState: catState
-  };
-
-
-
-  res.status(201).render('pages/catways', { session: session, fullInfo: fullInfo })
+  res.status(201).render('pages/catways', { session: session })
 });
 
 module.exports = router;

@@ -7,8 +7,8 @@
         <legend>Recherché une réservation</legend>
         
         <p>
-            <label for="idFind-select">id: 2</label>
-            <select name="idFind" id="idFind-select">
+            <label for="idFind-reserv-select">Numéro de réservation</label>
+            <select name="idFind" id="idFind-reserv-select">
             </select required>
         </p>
 
@@ -23,28 +23,4 @@
     <%= idFind %>
 </div>
 
-<script>
-
-    //récupération des id disponible
-    const selectElement = document.querySelector('select');
-    const idArray = [1,2,4,5,6,9,10,13];
-    console.log(selectElement)
-    for (let i = 0; i < idArray.length; i++) {
-        
-        const optionElement =  document.createElement('option');
-        optionElement.innerText=idArray[i]
-        optionElement.setAttribute('value', idArray[i])
-        selectElement.appendChild(optionElement)
-    };
-    const formFindOneReservation = document.getElementById('Form_find_one_reservation');
-    //mise en place de l'écoute
-    formFindOneReservation.addEventListener('submit', (e) => {
-        e.preventDefault(); // Empêche le comportement par défaut du formulaire
-
-        const idFind = document.getElementById('idFind-select').value;
-        const url = `/reservation/${idFind}`; // Crée l'URL avec l'email en tant que param
-    
-        //renvoie de l'adresse au bon format
-        window.location.replace(url); // Redirige vers la nouvelle URL
-    });
-</script>
+<script src="/javascripts/reserv_find_form.js"></script>

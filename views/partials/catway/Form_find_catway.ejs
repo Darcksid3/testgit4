@@ -1,11 +1,19 @@
+
 <h2>Form find catway</h2>
 <form id="Form_find_one_catway">
     <fieldset>
         <legend>Recherché un catway</legend>
-        
         <p>
-            <label for="idFind-select">id: 2</label>
-            <select name="idFind" id="idFind-select">
+            <label for="all">Tous</label>
+            <input type="radio" name="size" id="all" value="all" checked/>
+            <label for="short">Short</label>
+            <input type="radio" name="size" id="short" value="short" />
+            <label for="long">Long</label>
+            <input type="radio" name="size" id="long" value="long" />
+        </p>
+        <p id="p-catway-find">
+            <label for="idFind-catway-select">Numéro de catway</label>
+            <select name="idFind" id="idFind-catway-select">
             </select required>
         </p>
 
