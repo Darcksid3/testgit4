@@ -1,6 +1,10 @@
 const express = require('express');
 const router = express.Router();
+const Joi = require('joi'); // Joi
 
+const catwaySchema = require('../joi/catwaySchema'); // Votre schéma Joi
+//const nodemailer = require('nodemailer');
+const Catway = require('../models/catway')
 const C = require('../test/test');
 
 
@@ -48,19 +52,48 @@ router.get('/:id', async (req,res,next) => {
   res.status(200).render('pages/catways', {session: session, idFind : idFind})
 });
 
+// ajout d'un catway
 router.post('/', async (req,res,next) => {
   //récupération de la session
   C.log('green', `Début route post`);
   session = req.session;
   session.page = 'createCatway';
   //récupération des donnée du formulaire
-  const catNumber = req.body.catwayNumber;
-  C.log('magenta', catNumber);
-  const size = req.body.size;
-  C.log('magenta', size);
-  const catState = req.body.catwayState;
-  C.log('magenta', catState);
-  res.status(201).render('pages/catways', { session: session })
+  const catwayNumber = req.body.catwayNumber;
+  C.log('magenta', catwayNumber);
+  const catwayType = req.body.catwayType;
+  C.log('magenta', catwayType);
+  const catwayState = req.body.catwayState;
+  C.log('magenta', catwayState);
+
+  const { error } = catwaySchema.validate(req.body);
+
+    if (error) {
+    return res.status(400).render('pages/catways', {
+      message: error.details[0].message
+    });
+  }
+    try {
+      const newCatway = new Catway({
+        catwayNumber: req.body.catwayNumber,
+        catwayType: req.body.catwayType,
+        catwayState: req.body.catwayState,
+      });
+  
+    const catwaySaved = await newCatway.save();
+    console.log(`Nouveau catway ajouté: ${catwaySaved.catwayNumber}`);
+  
+    res.status(201).render('pages/catways', {
+      session: session,
+      message: 'Catway créé.'
+    });
+
+  } catch (dbError) {
+    console.error(`Erreur lors de la création du catway : ${dbError.message}`);
+    res.status(500).render('pages/catways', {
+      message: `Erreur: ${dbError.message}`
+    });
+  }
 });
 
 module.exports = router;

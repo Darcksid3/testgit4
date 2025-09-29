@@ -14,8 +14,8 @@
         }
     };
     selectOpt(all)
-    if (document.querySelector('input[name="size"]')) {
-        document.querySelectorAll('input[name="size"]').forEach((elem) => {
+    if (document.querySelector('input[name="catwayType"]')) {
+        document.querySelectorAll('input[name="catwayType"]').forEach((elem) => {
             elem.addEventListener("change", function(event) {
             
             

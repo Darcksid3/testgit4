@@ -10,9 +10,11 @@ ainsi qu'un tableau de bord pour l'administration.
 ## Feuille de route
 :x: !!Section en cours!!
 1. Gestion des utilisateurs
-    - :white_check_mark: Ajout des nouveau utilisateur dans la BD
+    - :white_check_mark: Ajout des nouveaux utilisateur dans la BD
 2. Gestion des catways
+    - :white_check_mark: Ajout des nouveaux catway dans la BD
 3. Gestion des réservations
+    - :white_check_mark: Ajout des nouvelles Réservation dans la BD
 
 ### Status
 - :white_check_mark: Serveur fonctionnel.
@@ -49,7 +51,9 @@ for users, docks, and reservations, as well as an administration dashboard.
 1. User's system
     - :white_check_mark: Add new user in DB
 2. Catway's system
+    - :white_check_mark: Add new catway in DB
 3. Reservation's system
+    - :white_check_mark: Add new reservation in DB
 
 ### Status
 - :white_check_mark: Server On
