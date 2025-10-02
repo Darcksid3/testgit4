@@ -4,14 +4,11 @@
   <%- include('../partials/menu') -%>
 
   <div class="dashcenter">
-    <!-- Tableau de bord utilisateur MENU -->
+    <!-- Tableau de bord Réservation MENU -->
     <nav class="navuser">
       <a href="/reservation?page=findAllReserv">Affiché toutes les réservations</a>
       <a href="/reservation?page=findOneReserv">Recherché une réservation</a>
       <a href="/reservation?page=createReserv">Crée une réservation</a>
-      <!-- modifier et supprimer a inclure dans la page d'utilisteur unique -->
-      <a href="/modify">modifier</a>
-      <a href="/delete">Supprimer</a>
     </nav>
     
     <!-- Fin du menu du tableau de bord utilisateur -->
@@ -30,9 +27,26 @@
       <div>
         <% if (typeof session.page !== 'undefined') { %>
           <% if (session.page === 'findAllReserv') { %>
-            <div>
-              <p>Afficher toutes les réservations</p>
+                        <div>
+              <h3>Toutes les réservations</h3>
+              <% if (typeof allReservations !== 'undefined' && allReservations.length > 0) { %>
+                <ul>
+                  <% allReservations.forEach(function(reservation) { %>
+                    <li>
+                      Catway n°: <%= reservation.catwayNumber %><br>
+                      Client: <%= reservation.clientName %><br>
+                      Bateau: <%= reservation.boatName %><br>
+                      Début: <%= new Date(reservation.startDate).toLocaleDateString('fr-FR') %><br>
+                      Fin: <%= new Date(reservation.endDate).toLocaleDateString('fr-FR') %>
+                      <a href="/reservation/<%= reservation.catwayNumber %>?page=modifyReserv">Modify</a>
+                    </li>
+                  <% }); %>
+                </ul>
+              <% } else { %>
+                <p>Aucune réservation trouvée.</p>
+              <% } %>
             </div>
+
           <% } else if (session.page === 'findOneReserv') { %>
             <div>
               <%- include('../partials/reservation/Form_find_reservation') -%>
@@ -41,10 +55,13 @@
             <div>
               <%- include('../partials/reservation/Form_create_reservation') -%>
             </div>
-          <% } %>
+          <% } else if (session.page === 'modifyReserv') { %>
+            <div>
+              <%- include('../partials/reservation/Form_modify_reservation') -%>
+            </div>
         <% } else { %>
           <p class="errmess">Variable page manquante</p>
-        <% } %>
+        <% }} %>
       </div>
       <!-- affichage de lredervation demandé -->
       <% if (typeof afficheReservation !== 'undefined') {  %>
@@ -56,11 +73,5 @@
     </section>
 
   </div>
-  <aside class="aside">
-        <p>Aside reservation Layout</p>
-        <p>visite : <%= session.visit %></p>
-        <p>page = <%= session.page %></p>
-        <p>email = <%= session.email %></p>
-   
-  </aside>
+		<%- include('../partials/Aside')-%>
 </div>

@@ -1,9 +1,12 @@
 const express = require('express');
+
 const cors = require('cors')
-const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const session = require('express-session');
+const MongoStore = require('connect-mongo');
+
+const path = require('path');
 
 // les routers
 const indexRouter = require('./routes/index');
@@ -12,7 +15,7 @@ const logoutRouter = require('./routes/logout');
 const dashRouter = require('./routes/dashboard');
 const usersRouter = require('./routes/users');
 const catRouter = require('./routes/catways');
-const reservRouter = require('./routes/reservation');
+//const reservRouter = require('./routes/reservation');
 
 const testRouter = require('./routes/test');
 
@@ -26,14 +29,28 @@ app.use(cors({
   origin: '*'
 }));
 
+
 //Création d'une session
 app.set('trust proxy', 1) // trust first proxy
 app.use(session({
   name: 'connect',
   secret: 'SeCr3T',  
-  resave: true,
+  resave: false,
   saveUninitialized: false,
-  cookies: { maxAge: Date.now() + (30 * 24 * 3600 * 1000)}
+  rolling: true,
+
+  store : MongoStore.create({
+    mongoUrl: process.env.MONGO_URL,
+    ttl: 2 * 24 * 60 * 60,
+    autoRemove:'interval',
+    autoRemoveInterval: '10',
+  }),
+
+  cookies: { 
+    maxAge: (2 * 24 * 3600 * 1000),
+    secure: false,
+    httpOnly: true
+  }
   })
 );
 
@@ -60,7 +77,7 @@ app.use('/logout', logoutRouter);
 app.use('/dashboard', dashRouter);
 app.use('/users', usersRouter);
 app.use('/catways', catRouter);
-app.use('/reservation', reservRouter);
+//app.use('/reservation', reservRouter);
 
 app.use('/test', testRouter);
 

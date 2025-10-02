@@ -1,35 +1,41 @@
 <% visite = typeof visite !=='undefined' ? visite : '0' %>
 
+<main>
+    <div class="conteneur">
+        <section class="accueil">
+            <!-- partie visite pour controle de la gestion des sessions -->
+            <h2>Accueil visite: <%= visite %></h2>
+            <!-- Présentation -->
+            <p class="description">
+                Notre API est conçue pour simplifier et optimiser la gestion des réservations de bateaux dans le port de
+                plaisance. Elle permet aux utilisateurs de consulter en temps réel la disponibilité des bateaux,
+                de réserver des emplacements, de modifier ou annuler des réservations, et de gérer les informations des utilisateurs.
+                Elle offre une interface intuitive pour les administrateurs.
+            </p>
+            <hr>
+            <!-- afficher/masquer le formulaire d'identification -->
+            <% if (typeof session.email !== 'undefined') { %>
+                
+            <p> 
+                <b><%= session.name %></b> acceder à votre <a href="/dashboard">Tableau de bord </a>
+            </p>
+            <p>
+                <p><a href="/logout">Se déconnecté</a></p>
+            </p>
+            <% } else { %>
+                <button onclick="afficheForm()">Connexion</button>
+                <%- include('../partials/Form_login') -%>
+            <% } %>
 
-<div class="conteneur">
-  <section class="accueil">
-    <!-- partie visite pour controle de la gestion des sessions -->
-    <h2>Accueil visite: <%= visite %></h2>
-    <!-- Présentation -->
-    <p class="description">
-        Notre API est conçue pour simplifier et optimiser la gestion des réservations de bateaux dans le port de
-        plaisance. Elle permet aux utilisateurs de consulter en temps réel la disponibilité des bateaux,
-        de réserver des emplacements, de modifier ou annuler des réservations, et de gérer les informations des utilisateurs.
-        Elle offre une interface intuitive pour les administrateurs.
-    </p>
-    <!-- afficher/masquer le formulaire d'identification -->
-    <% if (typeof email !== 'undefined') { %>
-    <p>Bienvenu <%= email %> acceder a votre <a href="/dashboard">Tableau de bord </a></p>
-    <p><a href="/logout">Déconnexion</a></p>
-    <% } else { %>
-    <button onclick="afficheForm()">Connexion</button>
-    <%- include('../partials/Form_login') -%>
-    <% } %>
-
-    <!-- Activation du message d'erreur en cas de donnée invalide "-->
-    <p class="errmess">
-    <% if (typeof message !=='undefined') { %>
-    <%= message %>
-    <% } else { %>
-    <!-- pas de messsage  -->
-    <% } %>
-    </p>
-  </section>
-</div>
-    
+            <!-- Activation du message d'erreur en cas de donnée invalide "-->
+            <p class="errmess">
+                <% if (typeof session.errMsg !=='undefined') { %>
+                    <%= session.errMsg %>
+                <% } else { %>
+                <!-- pas de messsage  -->
+                <% } %>
+            </p>
+        </section>
+    </div>
+</main>
 

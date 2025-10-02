@@ -1,0 +1,45 @@
+<h3> Modifier un utilisateur</h3>
+<% if (typeof user !== 'undefined') { %> 
+    <table> 
+        <tr> 
+            <td>Nom</td>
+            <td>Email</td>
+        </tr> 
+        <tr> 
+            <td><%= user ? user.name : '' %></td> 
+            <td><%= user ? user.email : '' %></td> 
+        </tr> 
+    </table> 
+<% } else { %> 
+    <p style="color: red; font-weight: bold;">Aucun utilisateur trouvée.</p> 
+    <% } %> 
+    <form method="post" action="/users/<%= user ? user.email : '' %>" id="Form-modify-user"> 
+        <fieldset> 
+            <legend>Modification d'un utilisateur</legend> 
+            <p>
+                <label for="name">Nom: Michel !</label>
+                <input type="text" name="name" id="name" value="<%= user ? user.name : '' %>" required />
+            </p>
+            <p>
+                <label for="email">Email: test@test.com</label>
+                <input type="email" name="email" id="email" value="<%= user ? user.email : '' %>" required />
+            </p>
+            <p>
+                <label for="password">Mot de passe: 1234</label>
+                <input type="password" name="password" id="create_password" />
+                <img src="../../../images/oeil.png" style="width: 20px; height: 20px;" alt="afficher le champ" onclick="afficheMdp('create_password')">
+                <p style="background-color: rgb(147, 147, 236);" onclick="randomMdpGen('create_password')">Généré un mot de passe</p>
+                
+            </p>
+            <p>
+                <button type="submit" id="modify">Modifier et Enregistrer</button>
+                <button form="Form-delete-user" type="submit" id="delete">Supprimer</button>
+            </p>
+        </fieldset>
+    </form>
+    <form method="POST" action="/users/<%= user ? user.email : '' %>" id="Form-delete-user">
+    </form>
+    <script src="/javascripts/user_modify_form.js"></script>
+
+
+

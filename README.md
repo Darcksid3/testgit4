@@ -9,18 +9,15 @@ ainsi qu'un tableau de bord pour l'administration.
 
 ## Feuille de route
 :x: !!Section en cours!!
-1. Gestion des utilisateurs
-    - :white_check_mark: Ajout des nouveaux utilisateur dans la BD
-2. Gestion des catways
-    - :white_check_mark: Ajout des nouveaux catway dans la BD
-3. Gestion des réservations
-    - :white_check_mark: Ajout des nouvelles Réservation dans la BD
+1. :white_check_mark: Gestion des catways
+2. :x:Gestion des utilisateurs
+3. :x:Gestion des réservations
 
 ### Status
 - :white_check_mark: Serveur fonctionnel.
-- :white_check_mark: Options de base de gestion d'utilisateur.
-- :white_check_mark: Options de base de gestion de catway.
-- :white_check_mark: Options de base de gestion de reservation.
+- :white_check_mark: gestion de catway complete (liste, recherche, ajout, modification et suppression).
+- :x: Options de base de gestion d'utilisateur (liste, recheche, ajout modification et supression).
+- :x: Options de base de gestion de reservation.
 
 ## Installation
 cloner le repo.\
@@ -48,18 +45,15 @@ for users, docks, and reservations, as well as an administration dashboard.
 
 ## Roadmap
 :x: !!In Progress!!
-1. User's system
-    - :white_check_mark: Add new user in DB
-2. Catway's system
-    - :white_check_mark: Add new catway in DB
-3. Reservation's system
-    - :white_check_mark: Add new reservation in DB
+1. :white_check_mark:Catway's system
+2. :x:User's system
+3. :x:Reservation's system
 
 ### Status
 - :white_check_mark: Server On
-- :white_check_mark: Simple users system
-- :white_check_mark: Simple catway system.
-- :white_check_mark: Simple reservation system.
+- :white_check_mark: catway system (list, find one, add, modify and supress).
+- :x: Simple users system (list, find one, add, modify and supress).
+- :x: Simple reservation system.
 
 
 ## Instalation

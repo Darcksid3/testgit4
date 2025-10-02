@@ -1,0 +1,53 @@
+<h3>Page de mofification d'un catway</h3>
+<% if (typeof catway !== 'undefined') { %> 
+    <table> 
+        <tr> 
+            <td>Numéro</td>
+            <td>Type</td>
+            <td>Etat</td>
+        </tr> 
+        <tr> 
+            <td><%= catway ? catway.catwayNumber : '' %></td> 
+            <td><%= catway ? catway.catwayType : '' %></td> 
+            <td><%= catway ? catway.catwayState : '' %></td> 
+        </tr> 
+    </table> 
+<% } else { %> 
+    <p style="color: red; font-weight: bold;">Aucun catway trouvée.</p> 
+    <% } %> 
+    <form method="post" action="/catways/<%= catway ? catway.catwayNumber : '' %>" id="Form-modify-catway"> 
+        <fieldset> 
+            <legend>Modification d'un catway</legend> 
+            <div id="clickDiv">
+                <p> 
+                    <label for="catwayNumber">Numéro de catway :</label> 
+                    <input type="text" name="catwayNumber" id="catwayNumber" value="<%= catway ? catway.catwayNumber : '' %>" readonly /> 
+                </p> 
+                <p> <label for="short">Short</label> 
+                    <input type="radio" name="catwayType" id="short" value="short" <%= catway && catway.catwayType === 'short' ? 'checked' : '' %> /> 
+                    <label for="long">Long</label> 
+                    <input type="radio" name="catwayType" id="long" value="long" <%= catway && catway.catwayType === 'long' ? 'checked' : '' %> /> 
+                </p>
+                <p>
+                    <label for="catwayState">Etat du catway</label>
+                    <textarea name="catwayState" id="catwayState"><%=  catway ? catway.catwayState: ''  %></textarea>
+                </p>
+            </div>
+
+            <p>
+                <button type="submit" id="modify">Modifier et Enregistrer</button>
+                <button form="Form-delete-catway" type="submit" id="delete">Supprimer</button>
+            </p>
+        </fieldset>
+    </form>
+
+    <form method="POST" action="/catways/<%= catway ? catway.catwayNumber : '' %>" id="Form-delete-catway">
+    
+    
+
+    </form>
+
+    <script src="/javascripts/cat_modfy_form.js"></script>
+
+
+

@@ -1,49 +1,39 @@
 <% 
-visite = typeof visite !=='undefined' ? visite : '0' ;
-style = new Intl.DateTimeFormat("fr-FR", {year:"numeric", month:"long", weekday:"long", day:"numeric"});
-dt = new Date();
-date = style.format(dt)
+	visite = typeof visite !=='undefined' ? visite : '0' ;
+	style = new Intl.DateTimeFormat("fr-FR", {year:"numeric", month:"long", weekday:"long", day:"numeric"});
+	dt = new Date();
+	date = style.format(dt)
 %>
-  
-  <div class="conteneur">
-    <%- include('../partials/menu') -%>
+<main>
+	<div class="conteneur">
+		<%- include('../partials/menu') -%>
 
-    <div class="dashcenter">
-      <!-- Tableau de bord utilisateur MENU -->
-      <nav class="navuser">
-        <a href="/users?page=0">Utilisateur</a>
-        <a href="/catways">Catways</a>
-        <a href="/reservation">Reservation</a>
-      </nav>
+		<div class="dashcenter">
+			<!-- Tableau de bord utilisateur MENU -->
+			<nav class="navuser">
+				<a href="/users?page=findAllUsers">Utilisateur</a>
+				<a href="/catways?page=findAllCatway">Catways</a>
+				<a href="/reservation?page=findAllReserv">Reservation</a>
+			</nav>
+			<!-- Fin du menu du tableau de bord utilisateur -->
+			
+			<section class="section">
+				<!-- partie visite pour controle de la gestion des sessions -->
+				<h2>Tableau de bord visite : <%= session.visit %></h2>
+				<!-- Message d'acceuil contenant la date du jours ainsi le nom et l'email de la personne connecté-->
+				<div>
+					<p>Nous somme le : <%= date %></p>
+					<% if (typeof session !=='undefined') { %>
+					<p>Bonjour <%= session.name %> </p>
+					<p>tu est connecté avec l'email :<%= session.email %></p>
+					
+					<% } else { %>
+					<p class="errmess">session manquante</p> 
+					<% } %>
+				</div>
+			</section>
 
-      <!-- Fin du menu du tableau de bord utilisateur -->
-      <section class="section">
-        <!-- partie visite pour controle de la gestion des sessions -->
-        <h2>Tableau de bord visite : <%= session.visit %></h2>
-        <!-- Message d'acceuil contentnat la date du jours ainsi le nom et l'email de la personne connecté-->
-        <div>
-          <p> nous somme le : <%= date %></p>
-          <% if (typeof session.email !=='undefined') { %>
-          <p>Bonjour <%= session.email %></p>
-          
-          <% } else { %>
-          <p class="errmess">email manquant</p> 
-          <% } %>
-        </div>
-        <!-- Affichage du centre de la page-->
-        <div class="resultat">
-          <p> Affichage des réservation en cours</p>
-        </div>        
-      </section>
-
-    </div>
-    <!-- information sur la session -->
-    <aside class="aside">
-        <p>Aside dashboard Layout</p>
-        <p>visite : <%= session.visit %></p>
-        <p>page = <%= session.page %></p>
-        <p>email = <%= session.email %></p>
-   
-    </aside>
-  </div>
-
+		</div>
+		<%- include('../partials/Aside')-%>
+	</div>
+</main>

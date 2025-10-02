@@ -24,7 +24,10 @@
     </fieldset>
 </form>
 <div id="resultat" class="resultat">
-    <% idFind = typeof idFind !=='undefined' ? idFind : '0000000000' %>
-    <%= idFind %>
+            <% if (typeof catway !== 'undefined') {  %>
+                <p> Numéro du catway : <%= catway.catwayNumber %></p>
+                <p> Type de catway : <%= catway.catwayType %></p>
+                <p> Etat du catway : <%= catway.catwayState %></p>
+            <%  } %>
 </div>
 <script src="/javascripts/cat_find_form.js"></script>

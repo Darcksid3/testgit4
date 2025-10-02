@@ -1,64 +1,77 @@
 <% visite = typeof visite !=='undefined' ? visite : '0' %>
 
-  
-  <div class="conteneur">
+<main>
+	<div class="conteneur">
     <%- include('../partials/menu') -%>
 
-    <div class="dashcenter">
-      <!-- Tableau de bord utilisateur MENU -->
-      <nav class="navuser">
-        <a href="/users?page=findAllUsers">Affiché</a>
-        <a href="/users?page=findOneUser">Recherché</a>
-        <a href="/users?page=createUser">Ajouter</a>
-        <!-- modifier et supprimer a inclure dans la page d'utilisteur unique -->
-        <a href="/modify">modifier</a>
-        <a href="/delete">Supprimer</a>
-      </nav>
-      <!-- Fin du menu du tableau de bord utilisateur -->
+		<div class="dashcenter">
+			<!-- Tableau de bord utilisateur MENU -->
+			<nav class="navuser">
+				<a href="/users?page=findAllUsers">Affiché</a>
+				<a href="/users?page=findOneUsers">Recherché</a>
+				<a href="/users?page=createUsers">Ajouter</a>
+			</nav>
+			<!-- Fin du menu du tableau de bord utilisateur -->
 
-      <section class="section">
-        <!-- partie visite pour controle de la gestion des sessions -->
-        <h2>Utilisateur visite : <%= session.visit %></h2>
-        <p>
-        <% if (typeof session.email !=='undefined') { %>
-        <p>Bienvenue <%= session.email %></p>
-        <% } else { %>
-        <p class="errmess">email manquant</p> 
-        <% } %>
-        </p>
+			<section class="section">
+			<!-- partie visite pour controle de la gestion des sessions -->
+			<h2>Utilisateur visite : <%= session.visit %></h2>
+			<div>
+				<% if (typeof session.email !=='undefined') { %>
+				<p>Bienvenue <%= session.email %></p>
+				<% } else { %>
+				<p class="errmess">email manquant</p> 
+				<% } %>
+			</div>
 
-        <!-- Affichage du centre de la page formulaire et résultat de recherche-->
-        <div>
-          <% if (typeof session.page !== 'undefined') { %>
-            <% if (session.page === 'findAllUsers') { %>
-              <div>
-                <p>Afficher tout les utilisateurs</p>
-              </div>
-            <% } else if (session.page === 'findOneUser') { %>
-              <div>
-                <%- include('../partials/users/Form_find_users') -%>
-              </div>
-            <%} else if (session.page === 'createUser') {%>
-            <div>
-              <%- include('../partials/users/Form_create_users') -%>
-            </div>
-          <% }} else {%>
-            <p class="errmess">Variable page manquante</p> 
-          <% } %>
-        </div>
-        <!-- affichage de l'email demandé -->
-        <% if (typeof afficheFindEmail !== 'undefined') {  %>
-        <div id="reponce"> <%= afficheFindEmail %></div>
-        <%  } %>
-        
-      </section>
+			<!-- Affichage du centre de la page formulaire et résultat de recherche-->
+			<div>
+				<% if (typeof session.page !== 'undefined') { %>
+				<% if (session.page === 'findAllUsers') { %>
+				<div>
+					<h3>Tout les utilisateur</h3>
+					<% if (typeof allUsers !== 'undefined' && allUsers.length > 0) { %>
+					<table>
+						<thead>
+							<td>Nom</td><td>Email</td><td></td>
+						</thead>
+						<% allUsers.forEach(function(users) { %>
+						<tr>
+							<td><%= users.name %></td>
+							<td><%= users.email %></td>
+							<td><a href="/users/<%= users.email %>?page=modifyUsers">Modifier</a></td>
+						</tr>	
+						<% }); %>
+						
+					</table>
+					<% } else { %>
+					<p>Aucun utilisateur trouvée.</p>
+					<% } %>
+				</div>
+				<% } else if (session.page === 'findOneUsers') { %>
+					<div>
+						<%- include('../partials/users/Form_find_users') -%>
+					</div>
+				<%} else if (session.page === 'createUsers') {%>
+					<div>
+						<%- include('../partials/users/Form_create_users') -%>
+					</div>
+				<% } else if (session.page === 'modifyUsers') {%>
+                    <div>
+                        <%- include('../partials/users/Form_modify_users') -%>
+                    </div>
+				<% } else {%>
+				<p class="errmess">Variable page manquante</p> 
+				<% }} %>
+			</div>
+			<!-- affichage de l'email demandé -->
+			<% if (typeof afficheFindEmail !== 'undefined') {  %>
+			<div id="reponce"> <%= afficheFindEmail %></div>
+			<%  } %>
+			
+			</section>
 
+		</div>
+		<%- include('../partials/Aside')-%>
     </div>
-    <aside class="aside">
-        <p>Aside utilisateur Layout</p>
-        <p>visite : <%= session.visit %></p>
-        <p>page = <%= session.page %></p>
-        <p>email = <%= session.email %></p>
-   
-    </aside>
-  </div>
+</main>
