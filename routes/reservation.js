@@ -24,12 +24,14 @@ router.use(checkAuth);
 // Liste toutes les réservations pour UN catway donné.
 router.get('/', async (req, res, next) => { 
     session = req.session;
+    const idCatway = req.params.idCatway; 
+    session.page = 'findForOneCatway'
     try {
+        // Logique : Trouver toutes les réservations dont le champ 'catwayId' (ou équivalent) est égal à idCatway
+        // const reservations = await Reservation.find({ catwayId: idCatway }).sort('startDate');
         
-        const reservations = await Reservation.find({ }).sort('startDate');
-        
-        return res.render('pages/reservations/list', { session: session, reservations: reservations });
-        // return res.status(200).json({ message: `Liste des réservations pour Catway ${idCatway}` });
+        // return res.render('pages/reservations/list', { reservations, idCatway });
+        return res.status(200).json({ message: `Liste des réservations pour Catway ${idCatway}` });
 
     } catch (error) {
         console.error("Erreur de liste :", error);
@@ -39,17 +41,20 @@ router.get('/', async (req, res, next) => {
 
 // Affiche une réservation spécifique.
 router.get('/:idReservation', async (req, res, next) => {
+    C.log('green', `Début de la route recherche une réservation`)
     const { idCatway, idReservation } = req.params;
-    
+    C.log('magenta', `numéri du catway : ${idCatway} // Numéro de la réservation : ${idReservation}`)
+    session = req.session;
+    session.page = 'findOneReserv'
     try {
         // Logique : Trouver la réservation par son ID et s'assurer qu'elle appartient bien à ce Catway
-        const reservation = await Reservation.findOne({ _id: idReservation, catwayId: idCatway });
+        const reservation = await Reservation.findOne({ _id: idReservation });
         
         if (!reservation) {
             return res.status(404).send("Réservation non trouvée.");
         }
-        
-        // return res.render('pages/reservations/details', { reservation });
+        //return res.redirect(`/catways/${idCatway}/reservation/${idReservation}?page=findOneReserv`)
+        //return res.render('pages/reservations', { session:session, idCatway:idCatway,reservation,reservation });
         return res.status(200).json({ message: `Détails de la Réservation ${idReservation} pour Catway ${idCatway}` });
 
     } catch (error) {
@@ -66,7 +71,8 @@ router.get('/:idReservation', async (req, res, next) => {
 router.post('/', async (req, res, next) => {
     const idCatway = req.params.idCatway; 
     const data = req.body; // Les données de la nouvelle réservation
-
+    session = req.session;
+    session.page = 'createCatway'
     try {
         // 1. Validation Joi (à insérer ici)
         // 2. Création de l'objet Reservation, en ajoutant l'idCatway
@@ -88,7 +94,8 @@ router.post('/', async (req, res, next) => {
 router.put('/:idReservation', async (req, res, next) => {
     const { idCatway, idReservation } = req.params;
     const data = req.body;
-
+    session = req.session;
+    session.page = 'modifyCatway'
     try {
         // Logique : Trouver et mettre à jour par ID de Réservation et s'assurer qu'elle est liée au bon Catway
         const updatedReservation = await Reservation.findOneAndUpdate(

@@ -4,6 +4,7 @@ const Joi = require('joi'); // Joi
 
 const catwaySchema = require('../joi/catwaySchema'); // Votre schéma Joi
 const Catway = require('../models/catway')
+const Reservation = require('../models/reservation');
 const C = require('../test/test');
 const reservationRouter = require('./reservation');
 
@@ -50,6 +51,32 @@ router.get('/', async (req, res, next) => {
 			C.log('red', `Erreur de recherche de catways: ${error.message}`);
 			res.status(500).send('Une erreur est arrivé durant la recherche de catways.');
 		}
+});
+
+router.get('/reservation', async (req, res, next) => {
+	C.log('green', `Début de la route réservation All`)
+    // Vérification de la connexion (si ce n'est pas déjà un middleware)
+    if (!req.session.verif) {
+        return res.status(401).redirect('/');
+    }
+	session = req.session
+	session.page = 'findAllReserv'
+    try {
+        // Logique pour trouver TOUTES les réservations, quel que soit le Catway
+        let reservations = await Reservation.find({}).sort('startDate');
+
+        return res.render('pages/reservation', { 
+			session: session,
+            allReservations: reservations, 
+            idCatway: null // Indique qu'on est en mode "toutes"
+        });
+        //return res.render('pages/reservation')
+		//return res.status(200).json({ message: "Liste de TOUTES les réservations (Globale)" });
+
+    } catch (error) {
+        console.error("Erreur de liste globale des réservations:", error);
+        return res.status(500).send("Erreur serveur.");
+    }
 });
 
 router.get('/:id', async (req,res,next) => {
@@ -242,28 +269,8 @@ router.get('/numbers/:type', async (req, res) => {
         return res.status(500).json({ error: "Erreur serveur lors de la récupération des numéros." });
     }
 });
-router.get('/reservations', async (req, res, next) => {
-    // Vérification de la connexion (si ce n'est pas déjà un middleware)
-    if (!req.session.verif) {
-        return res.status(401).redirect('/');
-    }
 
-    try {
-        // Logique pour trouver TOUTES les réservations, quel que soit le Catway
-        let reservations = await Reservation.find({}).sort('startDate');
 
-        res.render('pages/reservations/list', { 
-            reservations: reservations, 
-            idCatway: null // Indique qu'on est en mode "toutes"
-        });
-        return res.render('pages/reservation')
-		//return res.status(200).json({ message: "Liste de TOUTES les réservations (Globale)" });
-
-    } catch (error) {
-        console.error("Erreur de liste globale des réservations:", error);
-        return res.status(500).send("Erreur serveur.");
-    }
-});
-router.use('/:idCatway/reservations', reservationRouter);
+router.use('/:idCatway/reservation', reservationRouter);
 
 module.exports = router;

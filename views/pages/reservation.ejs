@@ -1,77 +1,83 @@
 <% visite = typeof visite !=='undefined' ? visite : '0' %>
 
 <div class="conteneur">
-  <%- include('../partials/menu') -%>
+<%- include('../partials/menu') -%>
 
-  <div class="dashcenter">
-    <!-- Tableau de bord Réservation MENU -->
-    <nav class="navuser">
-      <a href="/reservation?page=findAllReserv">Affiché toutes les réservations</a>
-      <a href="/reservation?page=findOneReserv">Recherché une réservation</a>
-      <a href="/reservation?page=createReserv">Crée une réservation</a>
-    </nav>
-    
-    <!-- Fin du menu du tableau de bord utilisateur -->
-    <section class="section">
-      <!-- partie visite pour controle de la gestion des sessions -->
-      <h2>Reservation visite : <%= session.visit %></h2>
-      <div>
-        <% if (typeof session.email !=='undefined') { %>
-          <p>Bienvenue <%= session.email %></p>
-        <% } else { %>
-          <p class="errmess">email manquant</p> 
-        <% } %>
-      </div>
+<div class="dashcenter">
+	<!-- Tableau de bord Réservation MENU -->
+	<nav class="navuser">
+	<a href="/reservation?page=findAllReserv">Affiché toutes les réservations</a>
+	<a href="/reservation?page=findOneReserv">Recherché une réservation</a>
+	<a href="/reservation?page=createReserv">Crée une réservation</a>
+	</nav>
+	
+	<!-- Fin du menu du tableau de bord utilisateur -->
+	<section class="section">
+	<!-- partie visite pour controle de la gestion des sessions -->
+	<h2>Reservation visite : <%= session.visit %></h2>
+	<div>
+		<% if (typeof session.email !=='undefined') { %>
+		<p>Bienvenue <%= session.email %></p>
+		<% } else { %>
+		<p class="errmess">email manquant</p> 
+		<% } %>
+	</div>
 
-      <!-- Affichage du centre de la page-->
-      <div>
-        <% if (typeof session.page !== 'undefined') { %>
-          <% if (session.page === 'findAllReserv') { %>
-                        <div>
-              <h3>Toutes les réservations</h3>
-              <% if (typeof allReservations !== 'undefined' && allReservations.length > 0) { %>
-                <ul>
-                  <% allReservations.forEach(function(reservation) { %>
-                    <li>
-                      Catway n°: <%= reservation.catwayNumber %><br>
-                      Client: <%= reservation.clientName %><br>
-                      Bateau: <%= reservation.boatName %><br>
-                      Début: <%= new Date(reservation.startDate).toLocaleDateString('fr-FR') %><br>
-                      Fin: <%= new Date(reservation.endDate).toLocaleDateString('fr-FR') %>
-                      <a href="/reservation/<%= reservation.catwayNumber %>?page=modifyReserv">Modify</a>
-                    </li>
-                  <% }); %>
-                </ul>
-              <% } else { %>
-                <p>Aucune réservation trouvée.</p>
-              <% } %>
-            </div>
+	<!-- Affichage du centre de la page-->
+	<div>
+		<% if (typeof session.page !== 'undefined') { %>
+		<% if (session.page === 'findAllReserv') { %>
+						<div>
+			<h3>Toutes les réservations</h3>
+			<% if (typeof allReservations !== 'undefined' && allReservations.length > 0) { %>
+				<table>
+					<thead>
+						<td>Numéro de catway</td><td>Nom du client</td><td>Nom du bateau</td><td>Date de début</td><td>Date de fin</td><td></td>
+					</thead>
+					<% allReservations.forEach(function(reservation) { %>
+						<tr>
+							<td><%= reservation.catwayNumber %></td>
+							<td><%= reservation.clientName %></td>
+							<td><%= reservation.boatName %></td>
+							<td><%= new Date(reservation.startDate).toLocaleDateString('fr-FR') %></td>
+							<td><%= new Date(reservation.endDate).toLocaleDateString('fr-FR') %></td>
+							<td><a href="/catways/<%= reservation.catwayNumber %>/reservation/<%=reservation._id%>?page=modifyReserv">Modify</a></td>
+						</tr>
+					<% }); %>
+					<tfoot>
+						<td>Numéro de catway</td><td>Nom du client</td><td>Nom du bateau</td><td>Date de début</td><td>Date de fin</td><td></td>
+					</tfoot>
+				</table>
+			<% } else { %>
+				<p>Aucune réservation trouvée.</p>
+			<% } %>
+			</div>
 
-          <% } else if (session.page === 'findOneReserv') { %>
-            <div>
-              <%- include('../partials/reservation/Form_find_reservation') -%>
-            </div>
-          <% } else if (session.page === 'createReserv') { %>
-            <div>
-              <%- include('../partials/reservation/Form_create_reservation') -%>
-            </div>
-          <% } else if (session.page === 'modifyReserv') { %>
-            <div>
-              <%- include('../partials/reservation/Form_modify_reservation') -%>
-            </div>
-        <% } else { %>
-          <p class="errmess">Variable page manquante</p>
-        <% }} %>
-      </div>
-      <!-- affichage de lredervation demandé -->
-      <% if (typeof afficheReservation !== 'undefined') {  %>
-        <div> 
-          <%= afficheReservation %>
-        </div>
-      <%  } %>
-        
-    </section>
+		<% } else if (session.page === 'findOneReserv') { %>
+			<div>
+			<%- include('../partials/reservation/Form_find_reservation') -%>
+			</div>
+		<% } else if (session.page === 'createReserv') { %>
+			<div>
+			<%- include('../partials/reservation/Form_create_reservation') -%>
+			</div>
+		<% } else if (session.page === 'modifyReserv') { %>
+			<div>
+			<%- include('../partials/reservation/Form_modify_reservation') -%>
+			</div>
+		<% } else { %>
+		<p class="errmess">Variable page manquante</p>
+		<% }} %>
+	</div>
+	<!-- affichage de lredervation demandé -->
+	<% if (typeof afficheReservation !== 'undefined') {  %>
+		<div> 
+		<%= afficheReservation %>
+		</div>
+	<%  } %>
+		
+	</section>
 
-  </div>
+</div>
 		<%- include('../partials/Aside')-%>
 </div>
