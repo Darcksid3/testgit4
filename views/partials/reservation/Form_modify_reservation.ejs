@@ -1,106 +1,189 @@
 <% if (typeof modifyReservation !== 'undefined') {%>
     
-
-<h3>Modification de reservation</h3>
-<form method="post" action="reservation" id="Form_create_reservation">
+<h3>Modification de réservation</h3>
+<form method="POST" action="/catways/<%= modifyReservation.catwayNumber %>/reservations/<%= modifyReservation._id %>" id="Form_modify_reservation">
     <fieldset>
         <legend>Modification d'une réservation</legend>
-        <div class="form">
+        <div class="form"> 
             <p>
-                <label for="catwayNumber">Numero du catway réservé: <%= modifyReservation.catwayNumber %></label>
-                <select id="catwayNumber" name="catwayNumber">
-                </select required >                
+                <label for="idReservation">Numéro de la réservation </label>
+                <input type="text" name="idReservation" id="idReservation" value="<%= modifyReservation._id %>" readonly /> 
             </p>
-            <p>
-                <label for="short">Short</label>
-                <input type="radio" name="catwayType" id="short" value="short" />
-                <label for="long">Long</label>
-                <input type="radio" name="catwayType" id="long" value="long" />
-            </p>
+            
+            <p id="p-startDate"></p>
+            <p id="p-endDate"></p>
+            
+            <p id="availability-message" style="font-weight: bold;"></p>
 
             <p>
-                <label for="clientName">Nom: Michel !</label>
+                <label for="catwayNumberDisplay">Numéro du catway réservé: </label>
+                <input type="text" id="catwayNumberDisplay" value="<%= modifyReservation.catwayNumber %>" readonly /> 
+                <input type="hidden" name="catwayNumber" value="<%= modifyReservation.catwayNumber %>" />
+            </p>
+            
+            <p>
+                <label for="clientName">Nom :</label>
                 <input type="text" name="clientName" id="clientName" placeholder="Le nom !" value="<%= modifyReservation.clientName %>" required />
             </p>
             <p>
-                <label for="boatName">Nom du bateau: L'alizée</label>
+                <label for="boatName">Nom du bateau :</label>
                 <input type="text" name="boatName" id="boatName" placeholder="Le nom du bateau !" value="<%= modifyReservation.boatName %>" required />
             </p>
-            <p id="p-startDate"></p>
-            <p id="p-endDate"></p>
+            
             <p>
-                <button type="submit">Ajouter</button>
+                <button type="submit" id="modify-button">Modifier la réservation</button>
+                <button form="Form-delete-reservation" type="submit" id="delete">Supprimer</button>
             </p>
         </div>
     </fieldset>
 </form>
 <% } else { %>
-                <p>Aucune réservation trouvée.</p>
-              <% } %>
+    <p>Aucune réservation trouvée.</p>
+<% } %>
+
+<form method="POST" action="/catways/<%= modifyReservation.catwayNumber %>/reservations/<%= modifyReservation._id %>" id="Form-delete-reservation">
+    
+</form>
 <script>
-    //remplisage du select de numéro de catway dispo
-    //créé un bouton radio pour sélectionner la taille du catway et crée une liste en fonction du radio choisit
     
-    const short = [1,2,3,4,6,7,8,11,12,13,14,16,17,18,19,21,22,23,24];
-    const long = [5,9,10,15,20];
-    const selectElement = document.querySelector('select')
-    function selectOpt(array) {
-        for (let i = 0; i < array.length; i++) {
-        const optionElement =  document.createElement('option');
-        optionElement.innerText=array[i]
-        optionElement.setAttribute('value', array[i])
-        selectElement.appendChild(optionElement)
-        }
-    };
+    const reservData = JSON.parse(`<%- JSON.stringify(modifyReservation) %>`);
+    const excludeId = reservData._id; // ID de la réservation en cours
+    const currentCatwayNumber = reservData.catwayNumber;
+
     
-    if (document.querySelector('input[name="catwayType"]')) {
-        document.querySelectorAll('input[name="catwayType"]').forEach((elem) => {
-            elem.addEventListener("change", function(event) {
-            let item = event.target.value;
-            console.log(item);
-            if (item === 'short') {
-                selectElement.options.length=0;
-                selectOpt(short)
-            
-            } else { 
-                selectElement.options.length=0;
-                selectOpt(long)
-            }
-        });
-    });
-    };
-    //BONUS
-    //récupéré les numéro de catway déja réservé et les mettre sur disabled et en couleur rouge
-    //mettre ceux disponible en vert 
-    //si tout est réservé notifier que tout les emplacement sont pris
+    const pStartDateElement = document.getElementById('p-startDate');
+    const pEndtDateElement = document.getElementById('p-endDate');
+    const modifyButton = document.getElementById('modify-button');
+    const availabilityMessage = document.getElementById('availability-message');
+    let startDateInput; // Sera initialisé après injection
+    let endDateInput;   // Sera initialisé après injection
     
-    //mise en place des champ de dates personalisé
-    // récupération des champs
-    const pStartDateElement = document.getElementById('p-startDate')
-    const pEndtDateElement = document.getElementById('p-endDate')
-    
-    //définition des minimales
-    const dte = new Date();
-    
-    let minYear = new Intl.DateTimeFormat("fr-FR", {year:"numeric"})
-    minYear = minYear.format(dte)
-    
-    let minMonth = new Intl.DateTimeFormat("fr-FR", {month:"numeric"})
-    minMonth = minMonth.format(dte)
-    if(minMonth < 10){ minMonth = '0' + minMonth } // si inferrieur a 10 ajoute un 0 pour etre au format
-    
-    let minDay = new Intl.DateTimeFormat("fr-FR", {day:"numeric"})
-    minDay = minDay.format(dte)
-    if(minDay < 10){ minDay = '0' + minDay } // si inferrieur a 10 ajoute un 0 pour etre au format
-    
-    let minDate = `${minYear}-${minMonth}-${minDay}`
-    // injexion dans les champs
+    // ------------------------------------------------
+    // 3. Mise en place des dates et injection
+    // ------------------------------------------------
+    const minDate = new Date().toISOString().split('T')[0]; 
+    const initialStartDate = reservData.startDate ? reservData.startDate.substring(0, 10) : '';
+    const initialEndDate = reservData.endDate ? reservData.endDate.substring(0, 10) : '';
+
+    // Injection dans les champs
     pStartDateElement.innerHTML = `
         <label for="startDate">Date de début</label>
-        <input type="date" name="startDate" id="startDate" min="${minDate}" value="${modifyReservation.startDate}" required/>
-        `
+        <input type="date" name="startDate" id="startDate" min="${minDate}" value="${initialStartDate}" required/>
+    `;
     pEndtDateElement.innerHTML= `
         <label for="endDate">Date de fin</label>
-        <input type="date" name="endDate" id="endDate" min="${minDate}" value="${modifyReservation.endDate}" required />
-        `
+        <input type="date" name="endDate" id="endDate" min="${minDate}" value="${initialEndDate}" required />
+    `;
+
+    // Attacher les références DOM aux nouveaux inputs
+    startDateInput = document.getElementById('startDate');
+    endDateInput = document.getElementById('endDate');
+    
+    // ------------------------------------------------
+    // 4. Fonction de VÉRIFICATION DE DISPONIBILITÉ (Simple Check)
+    // ------------------------------------------------
+    async function checkCatwayAvailability() {
+        const startDate = startDateInput.value;
+        const endDate = endDateInput.value;
+        
+        if (!startDate || !endDate) {
+            modifyButton.disabled = true;
+            return;
+        }
+
+        
+        // On passe l'ID de la réservation à exclure et le numéro du Catway à vérifier
+        const url = `/catways/disponibility-check?startDate=${startDate}&endDate=${endDate}&catwayNumber=${currentCatwayNumber}&excludeId=${excludeId}`;
+        
+        try {
+            const response = await fetch(url);
+            
+            if (response.status === 200) {
+                // Le Catway est disponible
+                availabilityMessage.style.color = 'green';
+                availabilityMessage.innerText = `Le Catway ${currentCatwayNumber} est disponible pour ces dates.`;
+                modifyButton.disabled = false;
+            } else if (response.status === 409) {
+                // Le Catway est en conflit (indisponible)
+                availabilityMessage.style.color = 'red';
+                availabilityMessage.innerText = `Catway ${currentCatwayNumber} indisponible à ces dates. Changez les dates ou annulez la réservation.`;
+                modifyButton.disabled = true;
+            } else {
+                throw new Error('Erreur inconnue lors de la vérification.');
+            }
+            
+        } catch (error) {
+            console.error("Erreur de vérification des disponibilités:", error);
+            availabilityMessage.style.color = 'orange';
+            availabilityMessage.innerText = "Erreur de serveur lors de la vérification.";
+            modifyButton.disabled = true;
+        }
+    }
+
+    // ------------------------------------------------
+    // 5. Écouteurs pour les changements de date
+    // ------------------------------------------------
+    startDateInput.addEventListener('change', checkCatwayAvailability);
+    endDateInput.addEventListener('change', checkCatwayAvailability);
+
+    // 6. Lancement initial
+    document.addEventListener('DOMContentLoaded', () => {
+        checkCatwayAvailability(); 
+    });
+
+    const formModifyReservation = document.getElementById('Form_modify_reservation')
+    formModifyReservation.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const data = Object.fromEntries(formData.entries());
+    const url = e.target.action;
+    delete data._method;
+    delete data.idReservation;
+
+    // Log pour debug
+    console.log('catwayNumber:', currentCatwayNumber, 'reservationId:', excludeId, 'url:', url);
+        try {
+            const response = await fetch(url, {
+                method:'PUT',
+                headers:{
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+
+            if (response.ok) {
+                console.log(`Mofification de la réservation ${reservData._id} pour le catway n° ${reservData.catwayNumber}`)
+                window.location.href = `/catways/reservations?page=findAllReserv`;
+            } else {
+                console.error("Échec de la mise à jour");
+            }
+        } catch (error) {
+            console.error("Erreur réseau:", error);
+        }
+    });
+
+    // ------------------------------------------------
+    // 7. Logique de Suppression (Inchangée)
+    // ------------------------------------------------
+    const deleteUrl = `/catways/${currentCatwayNumber}/reservations/${excludeId}`;
+    const formDeleteReservation = document.getElementById('Form-delete-reservation');
+    
+    formDeleteReservation.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        try {
+            const response = await fetch(deleteUrl, { method: 'DELETE' });
+
+            if (response.status === 204 || response.ok) { 
+                console.log(`Suppression de la réservation n° = ${excludeId}`)
+                window.location.replace('/catways/reservations?page=findAllReserv'); 
+            } else {
+                const errorText = await response.text();
+                console.error(`Erreur de suppression: ${response.status} - ${errorText}`);
+                alert(`Erreur de suppression: ${errorText}`);
+            }
+        } catch (error) {
+            console.error("Erreur réseau ou script", error);
+        }
+    });
 </script>

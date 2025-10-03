@@ -33,7 +33,7 @@
                         <% if (typeof allCatways !== 'undefined' && allCatways.length > 0) { %>
                         <table>
                             <thead>
-                                <td>Numero</td><td>Type</td><td>Etat</td><td></td>
+                                <td>Numero</td><td>Type</td><td>Etat</td><td>Reservation</td><td></td>
                             </thead>
                             <tbody>
                             <% allCatways.forEach(function(catways) { %>
@@ -41,12 +41,13 @@
                                 <td><%= catways.catwayNumber %></td>
                                 <td><%= catways.catwayType %></td>
                                 <td><%= catways.catwayState %></td>
-                                <td><a href="/catways/<%= catways.catwayNumber %>?page=modifyCatway">Modifier</a></td>
+                                <td><a href="/catways/<%= catways.catwayNumber %>/reservations?page=findForCatway">Reservation du catway</a></td>
+                                <td><a href="/catways/<%= catways.catwayNumber %>?page=modifyCatway">Modifier le catway</a></td>
                             </tr>
                             <% }); %>
                             </tbody>
                             <tfoot>
-                                <td>Numero</td><td>Type</td><td>Etat</td><td></td>
+                                <td>Numero</td><td>Type</td><td>Etat</td><td>Reservation</td><td></td>
                             </tfoot>
                         </table>
                         <% } else { %>

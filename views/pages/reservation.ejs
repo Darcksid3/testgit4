@@ -3,81 +3,125 @@
 <div class="conteneur">
 <%- include('../partials/menu') -%>
 
-<div class="dashcenter">
-	<!-- Tableau de bord Réservation MENU -->
-	<nav class="navuser">
-	<a href="/reservation?page=findAllReserv">Affiché toutes les réservations</a>
-	<a href="/reservation?page=findOneReserv">Recherché une réservation</a>
-	<a href="/reservation?page=createReserv">Crée une réservation</a>
-	</nav>
-	
-	<!-- Fin du menu du tableau de bord utilisateur -->
-	<section class="section">
-	<!-- partie visite pour controle de la gestion des sessions -->
-	<h2>Reservation visite : <%= session.visit %></h2>
-	<div>
-		<% if (typeof session.email !=='undefined') { %>
-		<p>Bienvenue <%= session.email %></p>
-		<% } else { %>
-		<p class="errmess">email manquant</p> 
-		<% } %>
-	</div>
-
-	<!-- Affichage du centre de la page-->
-	<div>
-		<% if (typeof session.page !== 'undefined') { %>
-		<% if (session.page === 'findAllReserv') { %>
-						<div>
-			<h3>Toutes les réservations</h3>
-			<% if (typeof allReservations !== 'undefined' && allReservations.length > 0) { %>
-				<table>
-					<thead>
-						<td>Numéro de catway</td><td>Nom du client</td><td>Nom du bateau</td><td>Date de début</td><td>Date de fin</td><td></td>
-					</thead>
-					<% allReservations.forEach(function(reservation) { %>
-						<tr>
-							<td><%= reservation.catwayNumber %></td>
-							<td><%= reservation.clientName %></td>
-							<td><%= reservation.boatName %></td>
-							<td><%= new Date(reservation.startDate).toLocaleDateString('fr-FR') %></td>
-							<td><%= new Date(reservation.endDate).toLocaleDateString('fr-FR') %></td>
-							<td><a href="/catways/<%= reservation.catwayNumber %>/reservation/<%=reservation._id%>?page=modifyReserv">Modify</a></td>
-						</tr>
-					<% }); %>
-					<tfoot>
-						<td>Numéro de catway</td><td>Nom du client</td><td>Nom du bateau</td><td>Date de début</td><td>Date de fin</td><td></td>
-					</tfoot>
-				</table>
-			<% } else { %>
-				<p>Aucune réservation trouvée.</p>
-			<% } %>
-			</div>
-
-		<% } else if (session.page === 'findOneReserv') { %>
-			<div>
-			<%- include('../partials/reservation/Form_find_reservation') -%>
-			</div>
-		<% } else if (session.page === 'createReserv') { %>
-			<div>
-			<%- include('../partials/reservation/Form_create_reservation') -%>
-			</div>
-		<% } else if (session.page === 'modifyReserv') { %>
-			<div>
-			<%- include('../partials/reservation/Form_modify_reservation') -%>
-			</div>
-		<% } else { %>
-		<p class="errmess">Variable page manquante</p>
-		<% }} %>
-	</div>
-	<!-- affichage de lredervation demandé -->
-	<% if (typeof afficheReservation !== 'undefined') {  %>
-		<div> 
-		<%= afficheReservation %>
-		</div>
-	<%  } %>
+	<div class="dashcenter">
+		<!-- Tableau de bord Réservation MENU -->
+		<nav class="navuser">
+		<a href="/catways/reservations?page=findAllReserv">Affiché toutes les réservations</a>
+		<a href="/catways/reservations?page=findOneReserv">Recherché une réservation</a>
+		<a href="/catways/reservations?page=createReserv">Crée une réservation</a>
+		</nav>
 		
-	</section>
+		<!-- Fin du menu du tableau de bord utilisateur -->
+		<section class="section">
+		<!-- partie visite pour controle de la gestion des sessions -->
+		<h2>Reservation visite : <%= session.visit %> vous etes sur la page <%= session.page %></h2>
+		<div>
+			<% if (typeof session.email !=='undefined') { %>
+			<p>Bienvenue <%= session.email %></p>
+			<% } else { %>
+			<p class="errmess">email manquant</p> 
+			<% } %>
+		</div>
 
-</div>
+		<!-- Affichage du centre de la page-->
+		<div>
+			<% if (typeof session.page !== 'undefined') { %>
+				<% if (session.page === 'findAllReserv') { %>
+					<div>
+						<h3>Toutes les réservations</h3>
+						<% if (typeof allReservations !== 'undefined' && allReservations.length > 0) { %>
+							<table>
+								<thead>
+									<td>Numéro de catway</td><td>Nom du client</td><td>Nom du bateau</td><td>Date de début</td><td>Date de fin</td><td></td><td></td>
+								</thead>
+								<% allReservations.forEach(function(reservation) { %>
+									<tr>
+										<td><%= reservation.catwayNumber %></td>
+										<td><%= reservation.clientName %></td>
+										<td><%= reservation.boatName %></td>
+										<td><%= new Date(reservation.startDate).toLocaleDateString('fr-FR') %></td>
+										<td><%= new Date(reservation.endDate).toLocaleDateString('fr-FR') %></td>
+										<td><a href="/catways/<%= reservation.catwayNumber %>/reservations/<%=reservation._id%>?page=findOneReserv">Afficher</a></td>
+										<td><a href="/catways/<%= reservation.catwayNumber %>/reservations/<%=reservation._id%>?page=modifyReserv">Modify</a></td>
+									</tr>
+								<% }); %>
+								<tfoot>
+									<td>Numéro de catway</td><td>Nom du client</td><td>Nom du bateau</td><td>Date de début</td><td>Date de fin</td><td></td><td></td>
+								</tfoot>
+							</table>
+						<% } else { %>
+							<p>Aucune réservation trouvée.</p>
+						<% } %>
+					</div>
+				<% } else if (session.page === 'findForCatway') { %>
+					<div>
+						<h3>Toutes les réservations du catway numéro : <%= idCatway %></h3>
+						<% if (typeof oneCatReservations !== 'undefined' && oneCatReservations.length > 0) { %>
+							<table>
+								<thead>
+									<td>Nom du client</td><td>Nom du bateau</td><td>Date de début</td><td>Date de fin</td><td></td><td></td>
+								</thead>
+								<% oneCatReservations.forEach(function(reservation) { %>
+									<tr>
+										<td><%= reservation.clientName %></td>
+										<td><%= reservation.boatName %></td>
+										<td><%= new Date(reservation.startDate).toLocaleDateString('fr-FR') %></td>
+										<td><%= new Date(reservation.endDate).toLocaleDateString('fr-FR') %></td>
+										<td><a href="/catways/<%= reservation.catwayNumber %>/reservations/<%=reservation._id%>?page=findOneReserv">Afficher</a></td>
+										<td><a href="/catways/<%= reservation.catwayNumber %>/reservations/<%=reservation._id%>?page=modifyReserv">Modify</a></td>
+									</tr>
+								<% }); %>
+								<tfoot>
+									<td>Nom du client</td><td>Nom du bateau</td><td>Date de début</td><td>Date de fin</td><td></td><td></td>
+								</tfoot>
+							</table>
+						<% } else { %>
+							<p>Aucune réservation trouvée pour le catway numéro : <%= idCatway %></p>
+						<% } %>
+					</div>
+				<% } else if (session.page === 'findOneReserv') { %>
+					<div>
+						<h3>réservation numéro <%= findOneReservation._id %> du catway numéro : <%= idCatway %></h3>
+						<% if (typeof findOneReservation !== 'undefined') { %>
+							<table>
+								<thead>
+									<td>Nom du client</td><td>Nom du bateau</td><td>Date de début</td><td>Date de fin</td><td></td>
+								</thead>
+									<tr>
+										<td><%= findOneReservation.clientName %></td>
+										<td><%= findOneReservation.boatName %></td>
+										<td><%= new Date(findOneReservation.startDate).toLocaleDateString('fr-FR') %></td>
+										<td><%= new Date(findOneReservation.endDate).toLocaleDateString('fr-FR') %></td>
+										<td><a href="/catways/<%= idCatway %>/reservations/<%=findOneReservation._id%>?page=modifyReserv">Modify</a></td>
+									</tr>
+								
+							</table>
+						<% } else { %>
+							<p>Aucune réservation numéro <%=findOneReservation._id %> trouvée pour le catway numéro : <%= idCatway %></p>
+						<% } %>
+					</div>
+				<% } else if (session.page === 'createReserv') { %>
+					<div>
+					<%- include('../partials/reservation/Form_create_reservation') -%>
+					</div>
+				<% } else if (session.page === 'modifyReserv') { %>
+					<div>
+					<%- include('../partials/reservation/Form_modify_reservation') -%>
+					</div>
+				<% } %>
+			<% } else { %>
+			<p class="errmess">Variable page manquante</p>
+			<% } %>
+		</div>
+		<!-- affichage de lredervation demandé -->
+		<% if (typeof afficheReservation !== 'undefined') {  %>
+			<div> 
+			<%= afficheReservation %>
+			</div>
+		<%  } else {} %>
+			
+		</section>
+
+	</div>
 		<%- include('../partials/Aside')-%>
 </div>

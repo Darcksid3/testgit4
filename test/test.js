@@ -78,6 +78,9 @@ switch (section) {
         case 'findAllReserv' :
             C.log('green', 'findAllReserv');
             break;
+        case 'findForCatway' :
+            C.log('grey', 'findForCatway');
+            break;
         case 'findOneReserv' :
             C.log('yellow', 'findOneReserv');
             break;
