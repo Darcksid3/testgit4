@@ -6,6 +6,10 @@ const logger = require('morgan');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
 
+const swaggerJsdoc = require('swagger-jsdoc');
+const swaggerUi = require('swagger-ui-express');
+
+
 const path = require('path');
 
 // les routers
@@ -21,6 +25,21 @@ const testRouter = require('./routes/test');
 
 const mongodb = require('./db/mongo');
 mongodb.initClientDbConnection();
+
+// Swagger configuration
+const options = {
+  definition: {
+    openapi: '3.0.0',
+    info: {
+      title: 'Port de plaisance Russell',
+      version: '1.0.0',
+      description: 'Documentation de l’API',
+    },
+  },
+  apis: ['./routes/*.js'], // Chemin vers tes fichiers de routes avec les commentaires Swagger
+};
+
+const specs = swaggerJsdoc(options);
 
 const app = express();
 
@@ -80,6 +99,8 @@ app.use('/catways', catRouter);
 //app.use('/reservation', reservRouter);
 
 app.use('/test', testRouter);
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
 
 
