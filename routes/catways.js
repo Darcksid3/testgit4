@@ -1,11 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Joi = require('joi'); // Joi
 
-const catwaySchema = require('../joi/catwaySchema'); // Votre schéma Joi
-const Catway = require('../models/catway')
-const Reservation = require('../models/reservation');
-const C = require('../test/test');
 const reservationRouter = require('./reservation');
 const catwayService = require('../services/catway');
 
@@ -13,10 +8,12 @@ const catwayService = require('../services/catway');
  * @swagger
  * /disponibility-check:
  *   get:
+ *     tags:
+ *       - Utilities
  *     summary: Lors de la modification d'une réservation compare la disponibilité d'un catway pour des dates données
  *     responses:
  *       200:
- *         description: renvoie si le catway est disponible ou non
+ *         description: renvoie si le catway est disponible ou non sans tenir compte de la réservation en cours
  */
 router.get('/disponibility-check', catwayService.disponibilityCheck);
 
@@ -24,10 +21,12 @@ router.get('/disponibility-check', catwayService.disponibilityCheck);
  * @swagger
  * /disponibility:
  *   get:
- *     summary: Lors de la création d'une réservation compare la disponibilité d'un catway pour des dates données
+ *     tags:
+ *       - Utilities
+ *     summary: Lors de la création d'une réservation compare la disponibilité des catways pour des dates données
  *     responses:
  *       200:
- *         description: renvoie si le catway est disponible ou non
+ *         description: renvoie les catways disponible ou non au dates données
  */
 router.get('/disponibility', catwayService.disponibility);
 
@@ -35,10 +34,12 @@ router.get('/disponibility', catwayService.disponibility);
  * @swagger
  * /reservations:
  *   get:
+ *     tags:
+ *       - Catway
  *     summary: Récupère toutes les réservations
  *     responses:
  *       200:
- *         description: Liste toutes les réservations
+ *         description: Liste toutes les réservations outrepasse la sous-route
  */
 router.get('/reservations', catwayService.reservation);
 
@@ -46,6 +47,8 @@ router.get('/reservations', catwayService.reservation);
  * @swagger
  * /numbers/{type}:
  *   get:
+ *     tags:
+ *       - Catway
  *     summary: Filtre les catways par type (short, long, all)
  *     parameters:
  *       - in: path
@@ -64,16 +67,22 @@ router.get('/numbers/:type', catwayService.numbersType);
  * @swagger
  * /{id}:
  *   get:
+ *     tags:
+ *       - Catway
  *     summary: Récupère un catway par son numéro et affiche la page demandée (modifyCatway, findOneCatway)
  *     responses:
  *       200:
  *         description: renvoie le catway filtré
  *   put:
+ *     tags:
+ *       - Catway
  *     summary: Modifie un catway par son numéro dans la base de donnée
  *     responses:
  *       200:
  *         description: renvoie sur la liste des catways
  *   delete:
+ *     tags:
+ *       - Catway
  *     summary: Supprime un catway par son numéro dans la base de donnée
  *     responses:
  *       200:
@@ -87,11 +96,15 @@ router.delete('/:id', catwayService.deleteCatway);
  * @swagger
  * /:
  *   get:
+ *     tags:
+ *       - Catway
  *     summary: Recherche tous les catways dans la base de donnée
  *     responses:
  *       200:
  *         description: renvoie la liste des catways
  *   post:
+ *     tags:
+ *       - Catway
  *     summary: Ajoute un catway à la base de donnée
  *     responses:
  *       200:
@@ -104,6 +117,8 @@ router.post('/', catwayService.addCatway);
  * @swagger
  * /{idCatway}/reservations:
  *   get:
+ *     tags:
+ *       - Catway
  *     summary: Sous-route pour les réservations associées à un catway
  *     responses:
  *       200:

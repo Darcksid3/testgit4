@@ -31,7 +31,7 @@ const options = {
   definition: {
     openapi: '3.0.0',
     info: {
-      title: 'Nom de ton API',
+      title: 'Port de plaisance Russell',
       version: '1.0.0',
       description: 'Documentation de l’API',
     },
