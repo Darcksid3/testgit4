@@ -9,6 +9,17 @@ router.use(checkJWT)
 /* GET page users arrivals. */
 const dashboardService = require('../services/dashboard');
 
+/**
+ * @swagger
+ * /dashboard:
+ *   get:
+ *     tags:
+ *       - Tableau de bord
+ *     summary: Récupère les réservations en cours
+ *     responses:
+ *       200:
+ *         description: donne accès au tableau de bord avec les réservations en cours et les liens vers les autres pages
+ */
 router.get('/', async (req, res, next) => {
     session = req.session;
     session.page = req.query.page;
