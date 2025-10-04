@@ -21,7 +21,7 @@ router.post('/', async (req,res,) => {
         delete session.errMsg;
         
         //res.header('Authorization', 'Bearer ' + token);
-        C.log('green' `Juste apres le token username  => ${user.name}`)
+        C.log('green', `Juste apres le token username  => ${user.name}`)
 
         res.status(301).redirect('/dashboard')
         

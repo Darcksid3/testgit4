@@ -13,7 +13,7 @@
 			<nav class="navuser">
 				<a href="/users?page=findAllUsers">Utilisateur</a>
 				<a href="/catways?page=findAllCatway">Catways</a>
-				<a href="/catways/reservation">Reservation</a>
+				<a href="/catways/reservations">Reservation</a>
 			</nav>
 			<!-- Fin du menu du tableau de bord utilisateur -->
 			
@@ -26,6 +26,27 @@
 					<% if (typeof session !=='undefined') { %>
 					<p>Bonjour <%= session.name %> </p>
 					<p>tu est connecté avec l'email :<%= session.email %></p>
+					<div>
+						<% if (typeof reservations !== 'undefined' && reservations.length > 0) { %>
+						<table>
+							<thead>
+								<td>Numéro du catway</td><td>Nom du client</td><td>Nom du bateau</td><td>Date de début</td><td>Date de fin</td><td></td>
+							</thead>
+							<% reservations.forEach(function(res) { %>
+							<tr>
+								<td> <%= res.catwayNumber %></td>
+								<td><%= res.clientName %> </td>
+								<td><%= res.boatName %> </td>
+								<td><%= new Date(res.startDate).toLocaleDateString('fr-FR') %> </td> 
+								<td><%= new Date(res.endDate).toLocaleDateString('fr-FR') %></td>
+								<td><a href="/catways/<%= res.catwayNumber %>/reservations/<%= res._id %>?page=findOneReserv">Affiché</a></td>
+							</tr>
+							<% }) %>
+						</table>
+						<% } else { %>
+						<p>Aucune réservation en cours.</p>
+						<% } %>
+											</div>
 					
 					<% } else { %>
 					<p class="errmess">session manquante</p> 

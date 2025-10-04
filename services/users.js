@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt');
 
 //TODO "Nodemailer" const nodemailer = require('nodemailer');
 const C = require('../test/test');
-
+const Users = require('../models/users');
 const inscriptionSchema = require('../joi/inscriptionSchema');
 const modifyUsersSchema = require('../joi/modifyUsersSchema');
 
@@ -19,7 +19,7 @@ exports.getAllUsers = async (req, res, next) => {
         let users = [];
         //* récupération des Utilisateur dans la DB
         if (session.page === 'findAllUsers') {
-            users = await Users.find({}).sort({ catwayNumber: 1 });; 
+            users = await Users.find({}); 
             C.log('green', `trouvé ${users.length} utilisateur`);
         }
 
