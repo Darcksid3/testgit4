@@ -124,7 +124,7 @@ selectElement.addEventListener('change', () => {
     choice = selectElement.selectedIndex  // Récupération de l'index du <option> choisi
     let idCatway = selectElement.options[choice].value
     console.log(idCatway)
-    form.setAttribute('action', `/catways/${idCatway}/reservation`)
+    form.setAttribute('action', `/catways/${idCatway}/reservations`)
     console.log(form)
 })
 

@@ -192,7 +192,7 @@ exports.createReservation = async (req, res, next) => {
             //return res.status(302).redirect('/catways/reservation');
         
         
-        return res.status(302).redirect(`/catways/reservation?page=findAllReserv`);
+        return res.status(302).redirect(`/catways/reservations?page=findAllReserv`);
         //C.log('magenta', `Réservation créée sur Catway ${idCatway} au nom de : ${data.clientName}`)
         //return res.status(201).render('pages/reservation')
 
