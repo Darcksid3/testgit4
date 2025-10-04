@@ -4,18 +4,8 @@ const router = express.Router({ mergeParams: true });
 const serviceReservation = require('../services/reservation');
 const C = require('../test/test'); 
 
-// Middleware de vérification de session (recommandé)
-const checkAuth = (req, res, next) => {
-    if (!req.session.verif) {
-        C.log('red', `Réservation : connexion non vérifiée`);
-        return res.status(401).redirect('/');
-    }
-    next();
-};
-
-
-// Appliquer le middleware à toutes les routes de réservation
-router.use(checkAuth); 
+const { checkJWT } = require('../middleware/private');
+router.use(checkJWT)
 
 /**
  * @swagger

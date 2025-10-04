@@ -1,10 +1,10 @@
-const Mongoose = require('mongoose');
-const JOI = require('joi');
+const jwt = require('jsonwebtoken');
+const SECRET_KEY = process.env.SECRET_KEY;
 const bcrypt = require('bcrypt');
 
 const connexionSchema = require('../joi/connexionSchema');
 const Users = require ('../models/users');
-const C = require('./test');
+const C = require('../test/test');
 
 exports.verifUsers = async (email,password) => {
 
@@ -33,10 +33,24 @@ exports.verifUsers = async (email,password) => {
             C.log('red', `Tentative de connexion : Mot de passe incorrect pour ${email}.`);
             return null; // Mot de passe invalide
         }
-        
+        //! Ajouté pour générer un token JWT
+        delete user._doc.password;
+            console.log(`Juste apres le delete password username  => ${user.name}`)
+            const expireIn = 2 * 24 * 60 * 60;
+            const token = jwt.sign({
+                user: user
+            },
+            SECRET_KEY,
+            {
+                expiresIn: expireIn
+            });
+
+
+        //! Fin de l'ajout
+
         C.log('green', `L'email : ${user.email} a été trouvé et validé.`);
         // On retourne l'utilisateur pour récupérer son nom, etc.
-        return user; 
+        return { user , token }; 
         
     } catch (error) { 
         // Erreur serveur/base de données

@@ -23,7 +23,7 @@ exports.disponibilityCheck = async (req, res) => {
         // La requête Mongoose vérifie s'il existe UNE autre réservation
         const conflictingReservation = await Reservation.findOne({
             catwayNumber: catwayNumber, // Uniquement ce numéro de Catway
-      _id: { $ne: excludeId },
+            _id: { $ne: excludeId },
             endDate: { $gt: newStart },      
             startDate: { $lt: newEnd }       
         }).lean();
@@ -44,7 +44,7 @@ exports.disponibilityCheck = async (req, res) => {
 
 exports.disponibility = async (req, res) => {
     // 1. Récupérer les dates depuis les paramètres de requête
-  C.log('green', `Debut route disponibility`)
+    C.log('green', `Debut route disponibility`)
     const { startDate, endDate } = req.query;
 
     if (!startDate || !endDate) {
@@ -99,29 +99,24 @@ exports.disponibility = async (req, res) => {
 };
 
 exports.reservation = async (req, res, next) => {
-  
-    // Vérification de la connexion (si ce n'est pas déjà un middleware)
-    if (!req.session.verif) {
-        return res.status(401).redirect('/');
-    }
-  session = req.session
+    session = req.session
 
-  //* Access a la page de création d'une réservation
-  if (req.query.page === 'createReserv') {
-    C.log('green', `Début de la route create réservation `)
-    session.page = 'createReserv';
-    return res.render(`pages/reservation`, { session: session });
-  }
-  C.log('green', `Début de la route réservation All`)
-  //* sinon afficher toutes les réservations
+    //* Access a la page de création d'une réservation
+    if (req.query.page === 'createReserv') {
+        C.log('green', `Début de la route create réservation `)
+        session.page = 'createReserv';
+        return res.render(`pages/reservation`, { session: session });
+    }
+    C.log('green', `Début de la route réservation All`)
+    //* sinon afficher toutes les réservations
     try {
         // Logique pour trouver TOUTES les réservations, quel que soit le Catway
         let reservations = await Reservation.find({}).sort('startDate');
 
-  session.page = 'findAllReserv'
+    session.page = 'findAllReserv'
 
         return res.render('pages/reservation', { 
-      session: session,
+            session: session,
             allReservations: reservations, 
             idCatway: null // Indique qu'on est en mode "toutes"
         });
@@ -165,72 +160,71 @@ exports.numbersType = async (req, res) => {
 };
 
 exports.findOneCatway = async (req,res,next) => {
-  //* récupération de la session
-  session = req.session;
-  //* Récupération du numéro de catway
-  let idFind = req.params.id;
-  C.log('cyan', `Début de la page catways/id l'id est : ${idFind}`);
-  //* Récupératin de la page demandé
-  const pageDemande = req.query.page;
-  C.log('cyan', `Affichage de la page demandé ${pageDemande}`)
-  //* recherche dans la base du catway demandé
-  try {
-    let catway = [];
-    catway = await Catway.findOne({ catwayNumber: idFind });
-    C.log('green', `Le numéro de catway ${catway.catwayNumber} a été trouvé`);
-    C.log('yellow', `Information sur la catway récupéré ${JSON.stringify(catway)}`)
-    //* switch de la page
-    switch (pageDemande) {
-      case 'modifyCatway' :
-        C.page('catway', pageDemande);
-        session.page = 'modifyCatway';
-        res.status(200).render('pages/catways', {session: session, catway: catway});
-        break;
-      case 'findOneCatway' :
-        C.page('catway', pageDemande);
-        session.page = 'findOneCatway';
-        res.status(200).render('pages/catways', {session: session, catway: catway})
-        break;
-      default :
-        C.page('catway', pageDemande);
-        session.page = 'findOneCatway';
-        res.status(200).render('pages/catways', {session: session})
+    //* récupération de la session
+    session = req.session;
+    //* Récupération du numéro de catway
+    let idFind = req.params.id;
+    C.log('cyan', `Début de la page catways/id l'id est : ${idFind}`);
+    //* Récupératin de la page demandé
+    const pageDemande = req.query.page;
+    C.log('cyan', `Affichage de la page demandé ${pageDemande}`)
+    //* recherche dans la base du catway demandé
+    try {
+        let catway = [];
+        catway = await Catway.findOne({ catwayNumber: idFind });
+        C.log('green', `Le numéro de catway ${catway.catwayNumber} a été trouvé`);
+        C.log('yellow', `Information sur la catway récupéré ${JSON.stringify(catway)}`)
+        //* switch de la page
+        switch (pageDemande) {
+            case 'modifyCatway' :
+            C.page('catway', pageDemande);
+            session.page = 'modifyCatway';
+            res.status(200).render('pages/catways', {session: session, catway: catway});
+            break;
+        case 'findOneCatway' :
+            C.page('catway', pageDemande);
+            session.page = 'findOneCatway';
+            res.status(200).render('pages/catways', {session: session, catway: catway})
+            break;
+        default :
+            C.page('catway', pageDemande);
+            session.page = 'findOneCatway';
+            res.status(200).render('pages/catways', {session: session})
+        }
+    } catch (error) {
+        C.log('red', `Erreur de recherche de catways: ${error.message}`);
+        return res.status(500).send('Une erreur est arrivé durant la recherche de catways.');
     }
-  } catch (error) {
-    C.log('red', `Erreur de recherche de catways: ${error.message}`);
-    return res.status(500).send('Une erreur est arrivé durant la recherche de catways.');
-  }
 };
 
 exports.modifyCatway = async (req,res,next) => {
-  C.log('green', `Début requête modification de catway`);
+    C.log('green', `Début requête modification de catway`);
 
-  // Récupération des données
-  const idFind = req.params.id;
-  const newType = req.body.catwayType;
-  const newState = req.body.catwayState;
+    // Récupération des données
+    const idFind = req.params.id;
+    const newType = req.body.catwayType;
+    const newState = req.body.catwayState;
 
 
-  try {
-    let updatedCatway = await Catway.findOneAndUpdate(
-      { catwayNumber : idFind},
-      {
-        catwayType: newType,
-        catwayState: newState
-      },
-      { new: true, runValidators: true }
+    try {
+        let updatedCatway = await Catway.findOneAndUpdate(
+        { catwayNumber : idFind},
+        {
+            catwayType: newType,
+            catwayState: newState
+        },
+        { new: true, runValidators: true }
     );
 
-    if (!updatedCatway) {
-      C.log('red', 'Catway non trouvé.')
-      return res.status(404).send('Catway non trouvé.');
+        if (!updatedCatway) {
+            C.log('red', 'Catway non trouvé.')
+            return res.status(404).send('Catway non trouvé.');
+        }
+        res.status(200).json({ message: "Catway mis à jour." });
+    } catch (error) {
+        console.error("Erreur de mise à jour:", error);
+        return res.status(500).send(error.message);
     }
-
-    res.status(200).json({ message: "Catway mis à jour." });
-  } catch (error) {
-    console.error("Erreur de mise à jour:", error);
-    return res.status(500).send(error.message);
-  }
     
 };
 
@@ -266,15 +260,6 @@ exports.deleteCatway = async (req, res, next) => {
 exports.getAllCatway = async (req, res, next) => {
 	//raccourci de la session
 	session = req.session;
-
-	//?Vérification de la connexion de l'utilisateur sinon redirection à l'accueil
-	if (session.verif) {
-		C.log('green', `catways connexion vérifié`);
-	} else {
-		C.log('red', `catways connexion non vérifié`)
-		res.status(401).redirect('/')
-	}
-
 	//*récupération de la page
 	session.page = req.query.page;
 	//*switch des pages à afficher
@@ -300,9 +285,9 @@ exports.getAllCatway = async (req, res, next) => {
 			res.status(401).render('pages/catways', { visite: session.visit});
 		}
 	} catch (error) {
-			C.log('red', `Erreur de recherche de catways: ${error.message}`);
-			res.status(500).send('Une erreur est arrivé durant la recherche de catways.');
-		}
+        C.log('red', `Erreur de recherche de catways: ${error.message}`);
+        res.status(500).send('Une erreur est arrivé durant la recherche de catways.');
+    }
 };
 
 exports.addCatway = async (req,res,next) => {
@@ -320,44 +305,44 @@ exports.addCatway = async (req,res,next) => {
 	const { error } = catwaySchema.validate(req.body);
 
 	if (error) {
-	return res.status(400).render('pages/catways', {
-	message: error.details[0].message
-	});
+	    return res.status(400).render('pages/catways', {
+	    message: error.details[0].message
+	    });
 	};
 	
 	try {
 		   // --- NOUVELLE LOGIQUE POUR TROUVER L'ID ---
     
-    // 1. Récupérer tous les numéros de catway existants et les trier
-    const existingNumbers = await Catway.find({}, { catwayNumber: 1, _id: 0 })
-        .sort({ catwayNumber: 1 }) // Trie par numéro croissant
-        .then(docs => docs.map(doc => doc.catwayNumber));
+        // 1. Récupérer tous les numéros de catway existants et les trier
+        const existingNumbers = await Catway.find({}, { catwayNumber: 1, _id: 0 })
+            .sort({ catwayNumber: 1 }) // Trie par numéro croissant
+            .then(docs => docs.map(doc => doc.catwayNumber));
 
-    let newCatwayNumber;
+        let newCatwayNumber;
 
-    // 2. Trouver le plus petit entier manquant (le trou)
-    for (let i = 1; i <= existingNumbers.length; i++) {
-        // Si le numéro 'i' n'est pas présent dans la liste
-        if (existingNumbers[i - 1] !== i) {
-            newCatwayNumber = i;
-            break;
+        // 2. Trouver le plus petit entier manquant (le trou)
+        for (let i = 1; i <= existingNumbers.length; i++) {
+            // Si le numéro 'i' n'est pas présent dans la liste
+            if (existingNumbers[i - 1] !== i) {
+                newCatwayNumber = i;
+                break;
+            }
         }
-    }
 
-    // 3. Si aucun trou n'est trouvé, prendre le dernier + 1
-    if (newCatwayNumber === undefined) {
-        const lastNumber = existingNumbers.length > 0 ? existingNumbers[existingNumbers.length - 1] : 0;
-        newCatwayNumber = lastNumber + 1;
-    }
-		const newCatway = new Catway({
-			catwayNumber: newCatwayNumber,
-			catwayType: req.body.catwayType,
-			catwayState: req.body.catwayState,
-	});
+        // 3. Si aucun trou n'est trouvé, prendre le dernier + 1
+        if (newCatwayNumber === undefined) {
+            const lastNumber = existingNumbers.length > 0 ? existingNumbers[existingNumbers.length - 1] : 0;
+            newCatwayNumber = lastNumber + 1;
+        }
+            const newCatway = new Catway({
+                catwayNumber: newCatwayNumber,
+                catwayType: req.body.catwayType,
+                catwayState: req.body.catwayState,
+        });
 
-	const catwaySaved = await newCatway.save();
-	console.log(`Nouveau catway ajouté: ${catwaySaved.catwayNumber}`);
-	res.status(302).redirect('/catways?page=findAllCatway');
+        const catwaySaved = await newCatway.save();
+        console.log(`Nouveau catway ajouté: ${catwaySaved.catwayNumber}`);
+        res.status(302).redirect('/catways?page=findAllCatway');
 
 	} catch (dbError) {
 		console.error(`Erreur lors de la création du catway : ${dbError.message}`);

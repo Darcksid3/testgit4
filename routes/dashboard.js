@@ -3,6 +3,8 @@ const router = express.Router();
 
 const C = require('../test/test');
 
+const { checkJWT } = require('../middleware/private');
+router.use(checkJWT)
 
 /* GET page users arrivals. */
 router.get('/', function (req, res, next) {

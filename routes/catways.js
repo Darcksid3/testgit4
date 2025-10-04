@@ -4,6 +4,9 @@ const router = express.Router();
 const reservationRouter = require('./reservation');
 const catwayService = require('../services/catway');
 
+const { checkJWT } = require('../middleware/private');
+router.use(checkJWT)
+
 /**
  * @swagger
  * /disponibility-check:
