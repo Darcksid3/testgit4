@@ -1,6 +1,4 @@
-//import
-const Joi = require('joi'); // Joi
-
+//imports
 const catwaySchema = require('../joi/catwaySchema'); // Votre schéma Joi
 const Catway = require('../models/catway')
 const Reservation = require('../models/reservation');
