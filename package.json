@@ -5,7 +5,7 @@
   "scripts": {
     "start": "env-cmd -f ./env/.env nodemon ./bin/www",
     "dev": "env-cmd -f ./env/.env.dev nodemon ./bin/www",
-    "prod": "env-cmd -f ./etc/secret/.env.prod nodemon ./bin/www"
+    "prod": "node ./bin/www"
   },
   "dependencies": {
     "bcrypt": "^6.0.0",
