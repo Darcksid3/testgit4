@@ -1,2 +1,4 @@
 /node_modules
 /env
+/etc/secret/.env.prod
+package-lock.json
