@@ -143,6 +143,8 @@ exports.findOneCatway = async (req,res,next) => {
     //* Récupératin de la page demandé
     const pageDemande = req.query.page;
     //* recherche dans la base du catway demandé
+    //récupération des réservation pour le catway recherché en vue de la page de modification
+    const reservations = await Reservation.find({ catwayNumber: idFind })
     try {
         let catway = [];
         catway = await Catway.findOne({ catwayNumber: idFind });
@@ -150,7 +152,7 @@ exports.findOneCatway = async (req,res,next) => {
         switch (pageDemande) {
             case 'modifyCatway' :
             session.page = 'modifyCatway';
-            res.status(200).render('pages/catways', {session: session, catway: catway});
+            res.status(200).render('pages/catways', {session: session, catway: catway, reservations: reservations});
             break;
         case 'findOneCatway' :
             session.page = 'findOneCatway';

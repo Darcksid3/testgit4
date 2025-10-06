@@ -38,6 +38,30 @@
                 <button form="Form-delete-catway" type="submit" id="delete">Supprimer</button>
             </p>
         </fieldset>
+        <div>
+            <% if(typeof reservations !== 'undefined' && reservations.length > 0) { %>
+                <strong class="attention">Attention des réservations sont associées à ce catway</strong><br />
+                <strong class="attention">Veuillez faire le nésséssaire avant de le supprimer</strong>
+                <table>
+                    <thead>
+                        <td>Numéro de réservation</td><td>Nom du client</td><td>Nom du bateau</td><td>Date de début</td><td>Date de fin</td><td></td><td></td>
+                    </thead>
+                    <% reservations.forEach(function(res) { %>
+                    <tr>
+                        <td> <%= res._id %></td>
+                        <td><%= res.clientName %> </td>
+                        <td><%= res.boatName %> </td>
+                        <td><%= new Date(res.startDate).toLocaleDateString('fr-FR') %> </td> 
+                        <td><%= new Date(res.endDate).toLocaleDateString('fr-FR') %></td>
+                        <td><a href="/catways/<%= res.catwayNumber %>/reservations/<%= res._id %>?page=findOneReserv" class="afficher">Affiché</a></td>
+                        <td><a href="/catways/<%= res.catwayNumber %>/reservations/<%= res._id %>?page=modifyReserv" class="modifier">Modifier</a></td>
+                    </tr>
+                    <% }) %>
+                </table>
+            <% } else { %>
+                <p>Aucune réservation pour ce catway.</p>   
+            <% } %>
+        </div>
         
     </form>
 

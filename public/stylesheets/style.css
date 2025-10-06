@@ -48,6 +48,9 @@ h2 {
   padding: 10px;
 }
 
+.attention {
+  color: red;
+}
 .conteneur {
   display: flex;
   flex-direction: row;
