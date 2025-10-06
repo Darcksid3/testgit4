@@ -1,8 +1,6 @@
 const express = require('express');
 const router = express.Router();
 
-const C = require('../test/test');
-
 const userService = require('../services/users');
 const { checkJWT } = require('../middleware/private');
 
@@ -119,10 +117,5 @@ router.delete('/:email', userService.deleteUsers);
  *         description: Utilisateur créé
  */
 router.post('/', userService.createUser);
-
-//TODO "Nodemailer" Route pour la vérification par email 
-/*
-router.get('/verify/:token', userService.verifyEmail);
-*/
 
 module.exports = router;

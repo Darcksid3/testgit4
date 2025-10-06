@@ -1,8 +1,3 @@
-// afficher/cacher le formulaire d connexion sur la page d'acueil
-
-/**
- * Display or not the login form 
- */
 
 let isActive = false;
 function afficheForm() {
@@ -35,7 +30,7 @@ function randomMdpGen(champ_mdp) {
   const minLength = 10;
   
   while (!regex.test(genMdp)) {
-    genMdp = ''; // On réinitialise si la condition n'est pas remplie
+    genMdp = ''; 
     for (let i = 0; i < minLength; i++) {
       genMdp += allChars.charAt(Math.floor(Math.random() * allChars.length));
     }

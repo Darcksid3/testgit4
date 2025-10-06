@@ -224,6 +224,7 @@ exports.getAllCatway = async (req, res, next) => {
 			catways = await Catway.find({}).sort({ catwayNumber: 1 }); 
 		} 
 
+		res.status(200).render('pages/catways', { session: session, allCatways: catways });
 	} catch (error) {
         res.status(500).send('Une erreur est arrivé durant la recherche de catways.');
     }

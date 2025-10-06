@@ -19,7 +19,6 @@ const logoutRouter = require('./routes/logout');
 const dashRouter = require('./routes/dashboard');
 const usersRouter = require('./routes/users');
 const catRouter = require('./routes/catways');
-//const reservRouter = require('./routes/reservation');
 
 const testRouter = require('./routes/test');
 
@@ -36,7 +35,7 @@ const options = {
       description: 'Documentation de l’API',
     },
   },
-  apis: ['./routes/*.js'], // Chemin vers tes fichiers de routes avec les commentaires Swagger
+  apis: ['./routes/*.js'], 
 };
 
 const specs = swaggerJsdoc(options);
@@ -50,7 +49,7 @@ app.use(cors({
 
 
 //Création d'une session
-app.set('trust proxy', 1) // trust first proxy
+app.set('trust proxy', 1) 
 app.use(session({
   name: 'connect',
   secret: 'SeCr3T',  
@@ -96,7 +95,6 @@ app.use('/logout', logoutRouter);
 app.use('/dashboard', dashRouter);
 app.use('/users', usersRouter);
 app.use('/catways', catRouter);
-//app.use('/reservation', reservRouter);
 
 app.use('/test', testRouter);
 

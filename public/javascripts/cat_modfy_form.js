@@ -1,7 +1,7 @@
 
 const catwayNumber = document.getElementById('catwayNumber').value;
 const formModifyCatway = document.getElementById('Form-modify-catway');
-//* Script modif (Ok)
+
 formModifyCatway.addEventListener('submit', async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
@@ -18,7 +18,6 @@ formModifyCatway.addEventListener('submit', async (e) => {
         });
 
         if (response.ok) {
-            console.log(`Mofification du catway n° ${catwayNumber}`)
             window.location.href = '/catways?page=findAllCatway';
         } else {
             console.error("Échec de la mise à jour");
@@ -42,7 +41,6 @@ formDeleteCatway.addEventListener('submit', async (e) => {
         });
 
         if (response.ok) {
-            console.log(`Supression du catway n° = ${catwayNumber}`)
             window.location.replace('/catways?page=findAllCatway');
         } else {
             const errorText = await response.text();

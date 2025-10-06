@@ -1,8 +1,6 @@
 const express = require('express');
 const router = express.Router();
 
-const C = require('../test/test');
-
 const { checkJWT } = require('../middleware/private');
 router.use(checkJWT)
 
@@ -23,13 +21,13 @@ const dashboardService = require('../services/dashboard');
 router.get('/', async (req, res, next) => {
     session = req.session;
     session.page = req.query.page;
-    C.page(session.page);
-
     let reservations = [];
     try {
         reservations = await dashboardService.getCurrentReservations();
     } catch (error) {
-        C.log('red', `Erreur lors de la récupération des réservations: ${error.message}`);
+        return res.status(400).json({ 
+            message: 'Erreur récupération de réservation courrante.'
+        });
     }
 
     if (session.email !== undefined){
@@ -38,7 +36,7 @@ router.get('/', async (req, res, next) => {
             visite: session.visit,
             email: session.email,
             page: session.page,
-            reservations: reservations // <-- à utiliser dans ta vue
+            reservations: reservations 
         });
     } else {
         res.status(401).render('pages/dashboard', { visite: session.visit });

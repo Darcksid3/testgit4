@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router({ mergeParams: true }); 
 
 const serviceReservation = require('../services/reservation');
-const C = require('../test/test'); 
 
 const { checkJWT } = require('../middleware/private');
 router.use(checkJWT)

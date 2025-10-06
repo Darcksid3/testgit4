@@ -17,7 +17,7 @@ exports.getAllUsers = async (req, res, next) => {
         if (session.page === 'findAllUsers') {
             users = await Users.find({}); 
         }
-
+        res.status(200).render('pages/users', { session: session, allUsers: users });
     } catch (error) {
             res.status(500).send(`Une erreur est arrivé durant la recherche d'utilisateur.`);
         }
