@@ -1,5 +1,4 @@
 <% 
-	visite = typeof visite !=='undefined' ? visite : '0' ;
 	style = new Intl.DateTimeFormat("fr-FR", {year:"numeric", month:"long", weekday:"long", day:"numeric"});
 	dt = new Date();
 	date = style.format(dt)
@@ -9,6 +8,7 @@
 		<%- include('../partials/menu') -%>
 
 		<div class="dashcenter">
+				<%- include('../partials/User_connected')-%>
 			<!-- Tableau de bord utilisateur MENU -->
 			<nav class="navuser">
 				<a href="/users?page=findAllUsers">Utilisateur</a>
@@ -19,14 +19,10 @@
 			
 			<section class="section">
 				<!-- partie visite pour controle de la gestion des sessions -->
-				<h2>Tableau de bord visite : <%= session.visit %></h2>
+				<h2>Tableau de bord</h2>
 				<!-- Message d'acceuil contenant la date du jours ainsi le nom et l'email de la personne connecté-->
 				<div>
-					<p>Nous somme le : <%= date %></p>
 					<% if (typeof session !=='undefined') { %>
-					<p>Bonjour <%= session.name %> </p>
-					<p>tu est connecté avec l'email :<%= session.email %></p>
-					<div>
 						<% if (typeof reservations !== 'undefined' && reservations.length > 0) { %>
 						<table>
 							<thead>
@@ -39,25 +35,19 @@
 								<td><%= res.boatName %> </td>
 								<td><%= new Date(res.startDate).toLocaleDateString('fr-FR') %> </td> 
 								<td><%= new Date(res.endDate).toLocaleDateString('fr-FR') %></td>
-								<td><a href="/catways/<%= res.catwayNumber %>/reservations/<%= res._id %>?page=findOneReserv">Affiché</a></td>
+								<td><a href="/catways/<%= res.catwayNumber %>/reservations/<%= res._id %>?page=findOneReserv" class="afficher">Affiché</a></td>
 							</tr>
 							<% }) %>
 						</table>
 						<% } else { %>
 						<p>Aucune réservation en cours.</p>
 						<% } %>
-											</div>
 					
 					<% } else { %>
 					<p class="errmess">session manquante</p> 
 					<% } %>
 				</div>
-				<div>
-					<!-- Liste de toute les réservation en cours -->
-				</div>
 			</section>
-
 		</div>
-		<%- include('../partials/Aside')-%>
 	</div>
 </main>

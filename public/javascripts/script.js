@@ -24,10 +24,10 @@ function randomMdpGen(champ_mdp) {
   const symbole = "&~#{([-|_\\^@)=+$]}*%!/:.;?,";
   const allChars = minuscule + majuscule + chiffre + symbole;
 
-  const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[&~#{(|\\\^@)=+$}%!/:.;?,])(.{10,})$/;
+  const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[&~#{(|\\\^@)=+$}%!/:.;?,])(.{10,20})$/;
   
   let genMdp = '';
-  const minLength = 10;
+  const minLength = Math.floor(Math.random() * (20 - 10) + 10); 
   
   while (!regex.test(genMdp)) {
     genMdp = ''; 

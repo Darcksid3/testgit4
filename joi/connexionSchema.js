@@ -6,7 +6,7 @@ const connexionSchema = Joi.object({
     .required(),
 
   password: Joi.string()
-    .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[&~#{(|\\\^@)=+$}%!/:.;?,])(.{10,})$/)
+    .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[&~#{(|\\\^@)=+$}%!/:.;?,])(.{10,20})$/)
     .required(),
 
   repeat_password: Joi.ref('password')

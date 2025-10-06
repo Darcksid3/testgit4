@@ -43,7 +43,7 @@ function populateSelect(numbersArray) {
     
     if (numbersArray.length === 0) {
         const option = document.createElement('option');
-        option.innerText = "Aucun catway disponible pour cette période";
+        option.innerText = "Pas de catway disponible";
         option.value = '';
         selectElement.appendChild(option);
         return;

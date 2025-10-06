@@ -29,8 +29,8 @@ formModifyCatway.addEventListener('submit', async (e) => {
 
 const formDeleteCatway = document.getElementById('Form-delete-catway');
 formDeleteCatway.addEventListener('submit', async (e) => {
-    console.log('test')
     e.preventDefault();
+
     const url = e.target.action;
     try {
         const response = await fetch(url, {

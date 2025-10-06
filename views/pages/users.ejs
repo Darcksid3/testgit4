@@ -5,6 +5,7 @@
     <%- include('../partials/menu') -%>
 
 		<div class="dashcenter">
+			<%- include('../partials/User_connected')-%>
 			<!-- Tableau de bord utilisateur MENU -->
 			<nav class="navuser">
 				<a href="/users?page=findAllUsers">Affiché</a>
@@ -15,14 +16,7 @@
 
 			<section class="section">
 			<!-- partie visite pour controle de la gestion des sessions -->
-			<h2>Utilisateur visite : <%= session.visit %></h2>
-			<div>
-				<% if (typeof session.email !=='undefined') { %>
-				<p>Bienvenue <%= session.email %></p>
-				<% } else { %>
-				<p class="errmess">email manquant</p> 
-				<% } %>
-			</div>
+			<h2>Gestion des utilisateurs</h2>
 
 			<!-- Affichage du centre de la page formulaire et résultat de recherche-->
 			<div>
@@ -37,9 +31,9 @@
 						</thead>
 						<% allUsers.forEach(function(users) { %>
 						<tr>
-							<td><%= users.name %></td>
+							<td><b><%= users.name %></b></td>
 							<td><%= users.email %></td>
-							<td><a href="/users/<%= users.email %>?page=modifyUsers">Modifier</a></td>
+							<td><a href="/users/<%= users.email %>?page=modifyUsers" class="modifier">Modifier</a></td>
 						</tr>	
 						<% }); %>
 						
@@ -72,6 +66,5 @@
 			</section>
 
 		</div>
-		<%- include('../partials/Aside')-%>
     </div>
 </main>

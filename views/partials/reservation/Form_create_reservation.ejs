@@ -1,35 +1,36 @@
 <form method="post" id="Form-create-reservation">
     <fieldset>
         <legend>Création d'une réservation</legend>
-        <div class="form">
-            <p id="p-startDate"></p>
-            <p id="p-endDate"></p>
-            <p>
+        <div class="form-contnair">
+            <div class="form-row">
+                <div class="form-date" id="p-startDate"> </div>
+                <div class="form-date" id="p-endDate"> </div>
+            </div>
+            <div class="form-radio">
                 <label for="all">Tous</label>
                 <input type="radio" name="catwayType" id="all" value="all" checked/>
                 <label for="short">Short</label>
                 <input type="radio" name="catwayType" id="short" value="short" />
                 <label for="long">Long</label>
                 <input type="radio" name="catwayType" id="long" value="long" />
-            </p>
-            <p id="p-catway-find">
-                <label for="idFind-catway-select">Numéro de catway disponible</label>
+            </div>
+            <div class="form-row" id="p-catway-find">
+                <label for="idFind-catway-select">Numéro de catway</label>
                 <select name="catwayNumber" id="idFind-catway-select" required>
-                    <option value="">Sélectionnez une période...</option>
+                    <option value="">Choisir une période...</option>
                 </select>
-            </p>
-            <p>
-                <label for="clientName">Nom: Michel !</label>
-                <input type="text" name="clientName" id="clientName" placeholder="Le nom !" value="Michel" required />
-            </p>
-            <p>
-                <label for="boatName">Nom du bateau: L'alizée</label>
-                <input type="text" name="boatName" id="boatName" placeholder="Le nom du bateau !" value="L'alizée" required />
-            </p>
-
-            <p>
+            </div>
+            <div class="form-row">
+                <div class="form-column"><label for="clientName">Nom:</label></div>
+                <div class="form-column"><input type="text" name="clientName" id="clientName" placeholder="Le nom du client !" required /></div>
+            </div>
+            <div class="form-row">
+                <div class="form-colums"><label for="boatName">Nom du bateau:</label></div>
+                <div class="form-colums"><input type="text" name="boatName" id="boatName" placeholder="Le nom du bateau !" required /></div>
+            </div>
+            <div class="form-row">
                 <button type="submit">Réserver</button>
-            </p>
+            </div>
         </div>
     </fieldset>
 </form>

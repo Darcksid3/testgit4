@@ -1,9 +1,6 @@
 
 const C = require('./test');
 
-exports.test = () => {
-    return C.log('red','Hello World !')
-};
 /**
 mon console log mémo couleur
 Black : "\x1b[30m" // Red : "\x1b[31m" // Green : "\x1b[32m" // Yellow : "\x1b[33m"
@@ -119,45 +116,5 @@ switch (section) {
     };  
 };
 
-/**
- * verify if email and password match' 
- * @param {String} email
- * @param {String} password
- * @returns 
- */ 
-exports.verifUser = (email, password) => {
-    const admin = {
-        email: 'admin@pp-russell.com',
-        password: '@8TvbZ;CGM'
-    };
-    const bruno = {
-        email: 'novalistik@gmail.com',
-        password: '!Nova8yma4'  
-    }
-    const test = {
-        email: 'test@test.com',
-        password: '1234'
-    }
-    const info = [admin, bruno, test];
-
-    for (let i=0;i<info.length;i++) {
-        if ( email === info[i].email && password === info[i].password ) {
-            return true
-        } 
-    }
-    return false
-};
-
-
-exports.triCat = (catways) => {
-    let cat = JSON.stringify(catways)
-    cat = JSON.parse(cat)
-    let catShort = [];
-    for (catwayType in cat){
-        if (catwayType = 'short')
-            catShort.push
-    }
-    return C.log('yellow', `${cat[1].catwayState}`)
-};
 
 

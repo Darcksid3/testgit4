@@ -20,7 +20,6 @@ const dashRouter = require('./routes/dashboard');
 const usersRouter = require('./routes/users');
 const catRouter = require('./routes/catways');
 
-const testRouter = require('./routes/test');
 
 const mongodb = require('./db/mongo');
 mongodb.initClientDbConnection();
@@ -96,7 +95,6 @@ app.use('/dashboard', dashRouter);
 app.use('/users', usersRouter);
 app.use('/catways', catRouter);
 
-app.use('/test', testRouter);
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 

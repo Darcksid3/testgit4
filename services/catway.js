@@ -173,6 +173,8 @@ exports.modifyCatway = async (req,res,next) => {
     const newState = req.body.catwayState;
 
 
+
+
     try {
         let updatedCatway = await Catway.findOneAndUpdate(
         { catwayNumber : idFind},
@@ -198,7 +200,7 @@ exports.deleteCatway = async (req, res, next) => {
 	const idFind = req.params.id;
 	
     try {
-        
+                
         const result = await Catway.findOneAndDelete({ catwayNumber: idFind });
 
         if (!result) {

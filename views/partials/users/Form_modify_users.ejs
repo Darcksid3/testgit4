@@ -1,4 +1,4 @@
-<h3> Modifier un utilisateur</h3>
+
 <% if (typeof user !== 'undefined') { %> 
     <table> 
         <tr> 
@@ -16,25 +16,36 @@
     <form method="post" action="/users/<%= user ? user.email : '' %>" id="Form-modify-user"> 
         <fieldset> 
             <legend>Modification d'un utilisateur</legend> 
-            <p>
-                <label for="name">Nom: Michel !</label>
-                <input type="text" name="name" id="name" value="<%= user ? user.name : '' %>" required />
-            </p>
-            <p>
-                <label for="email">Email: test@test.com</label>
-                <input type="email" name="email" id="email" value="<%= user ? user.email : '' %>" required />
-            </p>
-            <p>
-                <label for="password">Mot de passe: 1234</label>
-                <input type="password" name="password" id="create_password" />
-                <img src="../../../images/oeil.png" style="width: 20px; height: 20px;" alt="afficher le champ" onclick="afficheMdp('create_password')">
-                <p style="background-color: rgb(147, 147, 236);" onclick="randomMdpGen('create_password')">Généré un mot de passe</p>
-                
-            </p>
-            <p>
+            <div class="form-contnair">
+                <div class="form-row">
+                    <div class="form-column"><label for="name">Nom:</label></div>
+                    <div class="form-column"><input type="text" name="name" id="name" value="<%= user ? user.name : '' %>" required /></div>
+                </div>
+            <div class="form-row">
+                <div class="form-column"><label for="email">Email:</label></div>
+                <div class="form-column"><input type="email" name="email" id="email" value="<%= user ? user.email : '' %>" required /></div>
+            </div>
+            <div class="form-column">
+                <div class="form-row">
+                    <div class="form-column"><label for="password">Mot de passe:</label></div>
+                    <div class="form-column">
+                        <div class="form-row">
+                            <input type="password" name="password" id="create_password" required />
+                            <img src="../../../images/oeil.png" style="width: 20px; height: 20px;" alt="afficher le champ" onclick="afficheMdp('create_password')">
+                        </div>
+                    </div>
+                </div>
+                <small>Le mot de passe doit faire 10 et 20 caractères, contenir au moins 1minuscule 1 majuscule</small>
+                <small> 1 chiffre et 1 symbole parmis les suivants : <b>&~#{}()|\^@=+$%!/:.;?,</b></small>
+                <div class="form-row">
+                    <p style="background-color: rgb(147, 147, 236);" onclick="randomMdpGen('create_password')">Généré un mot de passe</p>
+                </div>
+            </div>
+            <div class="form-row ">
                 <button type="submit" id="modify">Modifier et Enregistrer</button>
                 <button form="Form-delete-user" type="submit" id="delete">Supprimer</button>
-            </p>
+            </div>
+            </div>
         </fieldset>
     </form>
     <form method="POST" action="/users/<%= user ? user.email : '' %>" id="Form-delete-user">

@@ -1,4 +1,3 @@
-<h3>Page de mofification d'un catway</h3>
 <% if (typeof catway !== 'undefined') { %> 
     <table> 
         <tr> 
@@ -28,10 +27,10 @@
                     <label for="long">Long</label> 
                     <input type="radio" name="catwayType" id="long" value="long" <%= catway && catway.catwayType === 'long' ? 'checked' : '' %> /> 
                 </p>
-                <p>
-                    <label for="catwayState">Etat du catway</label>
-                    <textarea name="catwayState" id="catwayState"><%=  catway ? catway.catwayState: ''  %></textarea>
-                </p>
+                <div class="form-row">
+                    <div class="form-column"><label for="catwayState">Etat du catway</label></div>
+                    <div class="form-column"><textarea cols="20" rows="3" name="catwayState" id="catwayState"><%=  catway ? catway.catwayState: ''  %></textarea></div>
+                </div>
             </div>
 
             <p>
@@ -39,6 +38,7 @@
                 <button form="Form-delete-catway" type="submit" id="delete">Supprimer</button>
             </p>
         </fieldset>
+        
     </form>
 
     <form method="POST" action="/catways/<%= catway ? catway.catwayNumber : '' %>" id="Form-delete-catway">
