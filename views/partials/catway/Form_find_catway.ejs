@@ -27,6 +27,7 @@
                 <p> Numéro du catway : <%= catway.catwayNumber %></p>
                 <p> Type de catway : <%= catway.catwayType %></p>
                 <p> Etat du catway : <%= catway.catwayState %></p>
+                <p><a href="/catways/<%= catway.catwayNumber %>/reservations/?page=createReserv" class="modifier">Le réservé</a></p>
             <%  } %>
 </div>
 <script src="/javascripts/cat_find_form.js"></script>

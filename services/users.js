@@ -28,26 +28,29 @@ exports.getOneUsers = async (req,res) => {
     session = req.session;
     //* Récupération de l'email
     let emailFind = req.params.email;
-    //* Récupératin de la page demandé
+    console.log(emailFind);
+    //* Récupération de la page demandé
     const pageDemande = req.query.page;
     //* recherche dans la base de l'utilisateur' demandé
     try {
         let user = [];
         user = await Users.findOne({ email: emailFind });
+        if (!user) {
+            session.errorMessage = `L'utilisateur ${emailFind} n'existe pas.`;
+            return res.status(404).render('pages/users', {session: session});
+        }
         //* switch de la page
         switch (pageDemande) {
             case 'modifyUsers' :
                 session.page = 'modifyUsers';
                 res.status(200).render('pages/users', {session: session, user: user});
                 break;
-            case 'findOneUsers' :
-                session.page = 'findOneUsers';
-                res.status(200).render('pages/users', {session: session, user: user})
             default :
                 session.page = 'findOneUsers';
-                res.status(200).render('pages/users', {session: session})
+                res.status(200).render('pages/users', {session: session, user: user})
         }
     } catch (error) {
+        console.log('error', error);
         res.status(500).send(`Une erreur est arrivé durant la recherche d'utilisateur.`);
     }
 };
@@ -128,7 +131,14 @@ exports.createUser = async (req, res, next) => {
     // mise raccourci de la session
     session = req.session;
     session.page = 'createUsers';
+    session.errorMessage = '';
 
+    const { error } = inscriptionSchema.validate(req.body);
+        if (error) {
+            session.errorMessage = `Vos information sont invalide veuillez les vérifier !`;
+            session.formData = req.body;
+            return res.status(400).redirect('/users?page=createUsers');
+        }
     // recherche si l'utilisateur est déja présent
     try {
         // Vérification de l'utilisateur existant 
@@ -140,12 +150,7 @@ exports.createUser = async (req, res, next) => {
         }
 
         // Validation du schéma par JOI
-        const { error } = inscriptionSchema.validate(req.body);
-        if (error) {
-            session.errorMessage = error.details[0].message;
-            session.formData = req.body;
-            return res.status(400).redirect('/users?page=createUsers');
-        }
+        
 
         // 4. Cryptage du mot de passe (avec await)
         const hash = await bcrypt.hash(req.body.password, 10);
@@ -160,13 +165,15 @@ exports.createUser = async (req, res, next) => {
         const userSaved = await newUser.save();
         
         // 6. Redirection après succès
+        session.errorMessage = '';
+        session.formData = {};
         session.successMessage = `Utilisateur ${userSaved.email} créé avec succès.`;
         return res.status(302).redirect('/users?page=findAllUsers');
 
     } catch (dbError) {
         session.errorMessage = `Erreur serveur lors de la création de l'utilisateur.`;
         // Redirige vers la liste avec l'erreur serveur pour ne pas perdre l'utilisateur
-        return res.status(500).redirect('/users?page=findAllUsers'); 
+        return res.status(500).redirect('/users?page=createUsers'); 
     }
 };
 

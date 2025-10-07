@@ -1,14 +1,19 @@
-<form method="post" action="users" id="Form_add_users">
+<div class="errmess">
+    <% if (typeof session.errorMessage !== 'undefined') { %>
+        <p><%= session.errorMessage %></p>
+    <% } else {} %>
+</div>
+<form method="post" action="/users" id="Form_add_users">
     <fieldset>
         <legend>Inscription</legend>
         <div class="form-contnair">
             <div class="form-row">
                 <div class="form-column"><label for="name">Nom:</label></div>
-                <div class="form-column"><input type="text" name="name" id="name" placeholder="Votre nom !"  required /></div>
+                <div class="form-column"><input type="text" name="name" id="name" placeholder="Votre nom !"  value="<%= session.formData.name  ? session.formData.name : '' %> " required /></div>
             </div>
             <div class="form-row">
                 <div class="form-column"><label for="email">Email:</label></div>
-                <div class="form-column"><input type="email" name="email" id="email" placeholder="Votre email !" required /></div>
+                <div class="form-column"><input type="email" name="email" id="email" placeholder="Votre email !" value="<%= session.formData.email  ? session.formData.email : '' %> " required /></div>
             </div>
             <div class="form-column">
                 <div class="form-row">
@@ -32,3 +37,10 @@
         </div>
     </fieldset>
 </form>
+<script>
+    const btnSubmit = document.querySelector('button[type="submit"]');
+    const errElement = document.querySelector('.errmess p');
+    btnSubmit.addEventListener('click', function(event) {
+        errElement.textContent = '';
+    });
+</script>

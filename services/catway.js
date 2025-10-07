@@ -88,7 +88,7 @@ exports.disponibility = async (req, res) => {
 
 exports.reservation = async (req, res, next) => {
     session = req.session
-
+    
     //* Access a la page de création d'une réservation
     if (req.query.page === 'createReserv') {
         session.page = 'createReserv';
