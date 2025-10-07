@@ -54,7 +54,7 @@ for users, docks, and reservations, as well as an administration dashboard.
 - :white_check_mark: Server On
 - :white_check_mark: catway system (list, find one, add, modify and supress).
 - :white_check_mark: reservation system (list, find one, add, modify and supress). 
-- ::white_check_mark: users system (list, find one, add, modify and supress).
+- :white_check_mark: users system (list, find one, add, modify and supress).
 
 ## Instalation
 Clone repos.\
