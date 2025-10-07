@@ -28,24 +28,22 @@
         <input type="date" name="endDate" id="endDate" min="${minDate}" value="${minDate}" required />
         `
 
-// 1. Références DOM
-const form = document.getElementById('Form-create-reservation'); // ID de votre formulaire
+const form = document.getElementById('Form-create-reservation'); 
 
-const startDateInput = document.getElementById('startDate'); // Assurez-vous d'avoir cet ID dans votre HTML
-const endDateInput = document.getElementById('endDate');   // Assurez-vous d'avoir cet ID dans votre HTML
+const startDateInput = document.getElementById('startDate');
+const endDateInput = document.getElementById('endDate');   
 const typeRadios = document.querySelectorAll('input[name="catwayType"]');
 const selectElement = document.getElementById('idFind-catway-select');
 
-// Variables de stockage (pour éviter les appels API multiples)
 let availableCatways = { short: [], long: [] };
 
 // Fonction utilitaire pour remplir le select
 function populateSelect(numbersArray) {
-    selectElement.options.length = 0; // Vider les options
+    selectElement.options.length = 0; 
     
     if (numbersArray.length === 0) {
         const option = document.createElement('option');
-        option.innerText = "Aucun catway disponible pour cette période";
+        option.innerText = "Pas de catway disponible";
         option.value = '';
         selectElement.appendChild(option);
         return;
@@ -66,12 +64,11 @@ async function updateAvailabilities() {
     
     // Vérification simple que les deux dates sont sélectionnées
     if (!startDate || !endDate) {
-        availableCatways = { short: [], long: [] }; // Vider
-        populateSelect([]); // Vider le select
+        availableCatways = { short: [], long: [] }; 
+        populateSelect([]); 
         return; 
     }
     
-    // Appel API
     const url = `/catways/disponibility?startDate=${startDate}&endDate=${endDate}`;
     
     try {
@@ -81,9 +78,8 @@ async function updateAvailabilities() {
         }
         
         const data = await response.json();
-        availableCatways = data; // Stocker les listes short et long
+        availableCatways = data; 
         
-        // 2. Mettre à jour le select immédiatement basé sur le type radio actuel
         const currentType = document.querySelector('input[name="catwayType"]:checked').value;
         const listToDisplay = availableCatways[currentType] || [];
         populateSelect(listToDisplay);
@@ -94,15 +90,9 @@ async function updateAvailabilities() {
     }
 }
 
-// ------------------------------------------------
-// 1. Écouteurs pour les changements de date
-// ------------------------------------------------
 startDateInput.addEventListener('change', updateAvailabilities);
 endDateInput.addEventListener('change', updateAvailabilities);
 
-// ------------------------------------------------
-// 2. Écouteurs pour les boutons radio (type short/long/all)
-// ------------------------------------------------
 typeRadios.forEach(radio => {
     radio.addEventListener('change', (e) => {
         const selectedType = e.target.value;
@@ -121,16 +111,13 @@ typeRadios.forEach(radio => {
 
 selectElement.addEventListener('change', () => {
 
-    choice = selectElement.selectedIndex  // Récupération de l'index du <option> choisi
+    choice = selectElement.selectedIndex  
     let idCatway = selectElement.options[choice].value
     console.log(idCatway)
     form.setAttribute('action', `/catways/${idCatway}/reservations`)
     console.log(form)
 })
 
-// ------------------------------------------------
-// Initialisation (pour le cas où les dates seraient déjà préremplies)
-// ------------------------------------------------
 document.addEventListener('DOMContentLoaded', () => {
     // Mettre 'all' par défaut si c'est le comportement attendu
     const allInput = document.getElementById('all');

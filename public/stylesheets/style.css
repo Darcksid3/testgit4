@@ -35,7 +35,7 @@ header {
   display: flex;
   justify-content: center;
   text-align: center;
-  flex-basis: 60%;
+  flex-basis: 80%;
 }
 
 footer {
@@ -48,6 +48,9 @@ h2 {
   padding: 10px;
 }
 
+.attention {
+  color: red;
+}
 .conteneur {
   display: flex;
   flex-direction: row;
@@ -123,13 +126,6 @@ h2 {
   border-left: darkgray 2px dashed;
 }
 
-.form {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  gap: 20px;
-}
-
 .errmess {
   color:red;
   font-weight: bold;
@@ -137,14 +133,6 @@ h2 {
 
 label {
   font-weight: 700;
-}
-
-.form-create-user {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  border: red 1px solid;
-  width:50%
 }
 
 #form_login{
@@ -163,4 +151,89 @@ label {
 td {
   border-bottom: 1px navy solid;
   padding: 10px;
+}
+
+.user-connected {
+  text-align: center;
+  background-color: rgba(141,180,252,90%);
+  color:rgb(255, 255, 255);
+}
+
+.form-contnair {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+}
+
+.form-row {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.form-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 10px;
+  flex: 1;
+}
+
+.form-radio {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+}
+
+.form-date {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+}
+
+.afficher {
+  background-color: darkgreen;
+  color: white;
+  border-radius: 20px 20px 20px 20px;
+  box-shadow: black 2px 2px 5px ;
+  padding: 5px;
+  font-weight: bold;
+  text-decoration: none;
+  text-align: center;
+}
+.afficher:hover {
+  background-color: green;
+  color: white;
+  border-radius: 20px 20px 20px 20px;
+  box-shadow: black 2px 2px 5px ;
+  padding: 5px;
+  font-weight: bold;
+  text-decoration: underline;
+  text-align: center;
+}
+
+.modifier {
+  background-color: darkorange;
+  color: white;
+  border-radius: 20px 20px 20px 20px;
+  box-shadow: black 2px 2px 5px ;
+  padding: 5px;
+  font-weight: bold;
+  text-decoration: none;
+  text-align: center;
+}
+.modifier:hover {
+  background-color: orange;
+  color: white;
+  border-radius: 20px 20px 20px 20px;
+  box-shadow: black 2px 2px 5px ;
+  padding: 5px;
+  font-weight: bold;
+  text-decoration: underline;
+  text-align: center;
 }

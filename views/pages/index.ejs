@@ -1,11 +1,9 @@
-<% visite = typeof visite !=='undefined' ? visite : '0' %>
-
 <main>
     <div class="conteneur">
         <section class="accueil">
             <!-- partie visite pour controle de la gestion des sessions -->
-            <h2>Accueil visite: <%= visite %></h2>
-            <p><a href="/api-docs" target="_blank">Documentation</a></p>
+            <h2>Accueil</h2>
+            <p><a href="/api-docs" target="_blank" class="afficher">Documentation</a></p>
             <!-- Présentation -->
             <p class="description">
                 Notre API est conçue pour simplifier et optimiser la gestion des réservations de bateaux dans le port de
@@ -16,9 +14,11 @@
             <hr>
             <!-- afficher/masquer le formulaire d'identification -->
             <% if (typeof session.email !== 'undefined') { %>
-                
+            <p>
+                Connecté en tant que <b><%= session.name %></b> avec l'email <b><%= session.email %></b>.
+            </p>
             <p> 
-                <b><%= session.name %></b> acceder à votre <a href="/dashboard">Tableau de bord </a>
+                Acceder à votre <a href="/dashboard" class="afficher">Tableau de bord </a>
             </p>
             <p>
                 <p><a href="/logout">Se déconnecté</a></p>

@@ -1,25 +1,46 @@
-<form method="post" action="users" id="Form_add_users">
+<div class="errmess">
+    <% if (typeof session.errorMessage !== 'undefined') { %>
+        <p><%= session.errorMessage %></p>
+    <% } else {} %>
+</div>
+<form method="post" action="/users" id="Form_add_users">
     <fieldset>
         <legend>Inscription</legend>
-        <div class="form">
-            <p>
-                <label for="name">Nom: Michel !</label>
-                <input type="text" name="name" id="name" placeholder="Votre nom !"  required />
-            </p>
-            <p>
-                <label for="email">Email: test@test.com</label>
-                <input type="email" name="email" id="email" placeholder="Votre email !" required />
-            </p>
-            <p>
-                <label for="password">Mot de passe: 1234</label>
-                <input type="password" name="password" id="create_password" required />
-                <img src="images/oeil.png" style="width: 20px; height: 20px;" alt="afficher le champ" onclick="afficheMdp('create_password')">
-                <p style="background-color: rgb(147, 147, 236);" onclick="randomMdpGen('create_password')">Généré un mot de passe</p>
-                
-            </p>
-            <p>
+        <div class="form-contnair">
+            <div class="form-row">
+                <div class="form-column"><label for="name">Nom:</label></div>
+                <div class="form-column"><input type="text" name="name" id="name" placeholder="Votre nom !"  value="<%= session.formData.name  ? session.formData.name : '' %> " required /></div>
+            </div>
+            <div class="form-row">
+                <div class="form-column"><label for="email">Email:</label></div>
+                <div class="form-column"><input type="email" name="email" id="email" placeholder="Votre email !" value="<%= session.formData.email  ? session.formData.email : '' %> " required /></div>
+            </div>
+            <div class="form-column">
+                <div class="form-row">
+                    <div class="form-column"><label for="password">Mot de passe:</label></div>
+                    <div class="form-column">
+                        <div class="form-row">
+                            <input type="password" name="password" id="create_password" required />
+                            <img src="images/oeil.png" style="width: 20px; height: 20px;" alt="afficher le champ" onclick="afficheMdp('create_password')">
+                        </div>
+                    </div>
+                </div>
+                <small>Le mot de passe doit faire 10 et 20 caractères, contenir au moins 1minuscule 1 majuscule</small>
+                <small> 1 chiffre et 1 symbole parmis les suivants : <b>&~#{}()|\^@=+$%!/:.;?,</b></small>
+                <div class="form-row">
+                    <p style="background-color: rgb(147, 147, 236);" onclick="randomMdpGen('create_password')">Généré un mot de passe</p>
+                </div>
+            </div>
+            <div class="form-row">
                 <button type="submit">Ajouter</button>
-            </p>
+            </div>
         </div>
     </fieldset>
 </form>
+<script>
+    const btnSubmit = document.querySelector('button[type="submit"]');
+    const errElement = document.querySelector('.errmess p');
+    btnSubmit.addEventListener('click', function(event) {
+        errElement.textContent = '';
+    });
+</script>

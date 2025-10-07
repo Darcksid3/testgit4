@@ -79,7 +79,6 @@ function onError(error) {
 }
 
 
-//app.use(proxy('http://127.0.0.1:8080'));
 
 /**
  * Event listener for HTTP server "listening" event.

@@ -1,7 +1,8 @@
-
+const reservations = '<%= reservations %>';
+console.log(reservations);
 const catwayNumber = document.getElementById('catwayNumber').value;
 const formModifyCatway = document.getElementById('Form-modify-catway');
-//* Script modif (Ok)
+
 formModifyCatway.addEventListener('submit', async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
@@ -18,7 +19,6 @@ formModifyCatway.addEventListener('submit', async (e) => {
         });
 
         if (response.ok) {
-            console.log(`Mofification du catway n° ${catwayNumber}`)
             window.location.href = '/catways?page=findAllCatway';
         } else {
             console.error("Échec de la mise à jour");
@@ -30,8 +30,8 @@ formModifyCatway.addEventListener('submit', async (e) => {
 
 const formDeleteCatway = document.getElementById('Form-delete-catway');
 formDeleteCatway.addEventListener('submit', async (e) => {
-    console.log('test')
     e.preventDefault();
+
     const url = e.target.action;
     try {
         const response = await fetch(url, {
@@ -42,7 +42,6 @@ formDeleteCatway.addEventListener('submit', async (e) => {
         });
 
         if (response.ok) {
-            console.log(`Supression du catway n° = ${catwayNumber}`)
             window.location.replace('/catways?page=findAllCatway');
         } else {
             const errorText = await response.text();

@@ -1,10 +1,10 @@
-    <% visite = typeof visite !=='undefined' ? visite : '0' %>
 
-    
+<main>    
     <div class="conteneur">
         <%- include('../partials/menu') -%>
 
         <div class="dashcenter">
+            <%- include('../partials/User_connected')-%>
         <!-- Tableau de bord utilisateur MENU -->
         <nav class="navuser">
             <a href="/catways?page=findAllCatway">Affiché tout les catways</a>
@@ -15,21 +15,14 @@
 
         <section class="section">
             <!-- partie visite pour controle de la gestion des sessions -->
-            <h2>Catways visite : <%= session.visit %></h2>
-            <p>
-            <% if (typeof session.email !=='undefined') { %>
-            <p>Bienvenue <%= session.email %></p>
-            <% } else { %>
-            <p class="errmess">email manquant</p> 
-            <% } %>
-            </p>
+            <h2>Gestion des catways</h2>
 
             <!-- Affichage du centre de la page-->
             <div >
             <% if (typeof session.page !== 'undefined') { %>
                 <% if (session.page === 'findAllCatway') { %>
                     <div>
-                        <h3>Toutes les catways</h3>
+                        <h3>Touts les catways</h3>
                         <% if (typeof allCatways !== 'undefined' && allCatways.length > 0) { %>
                         <table>
                             <thead>
@@ -41,8 +34,8 @@
                                 <td><%= catways.catwayNumber %></td>
                                 <td><%= catways.catwayType %></td>
                                 <td><%= catways.catwayState %></td>
-                                <td><a href="/catways/<%= catways.catwayNumber %>/reservations?page=findForCatway">Reservation du catway</a></td>
-                                <td><a href="/catways/<%= catways.catwayNumber %>?page=modifyCatway">Modifier le catway</a></td>
+                                <td><a href="/catways/<%= catways.catwayNumber %>/reservations?page=findForCatway" class="afficher">Reservation</a></td>
+                                <td><a href="/catways/<%= catways.catwayNumber %>?page=modifyCatway" class="modifier">Modifier</a></td>
                             </tr>
                             <% }); %>
                             </tbody>
@@ -78,5 +71,6 @@
         </section>
 
         </div>
-		<%- include('../partials/Aside')-%>
+		
     </div>
+</main>

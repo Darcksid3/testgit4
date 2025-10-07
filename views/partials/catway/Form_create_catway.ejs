@@ -1,22 +1,20 @@
-<h2>Form create catway</h2>
 <form method="post" action="catways" id="Form_create_catway">
     <fieldset>
         <legend>Création d'un catway</legend>
-        <div class="form">
-            <p>
+        <div class="form-container">
+            <div class="form-radio">
                 <label for="short">Short</label>
                 <input type="radio" name="catwayType" id="short" value="short" />
                 <label for="long">Long</label>
                 <input type="radio" name="catwayType" id="long" value="long" />
-            </p>
-
-            <p>
-                <label for="description">Description</label>
-                <textarea name="catwayState" id="catwayState" placeholder="Description de son état" required></textarea>
-            </p>
-            <p>
+            </div>
+            <div class="form-row" style="margin-top: 10px;">
+                <div class="form-column"><label for="description">Description</label></div>
+                <div class="form-column"><textarea cols="20" rows="3" name="catwayState" id="catwayState" placeholder="Description de son état" required></textarea></div>
+            </div>
+            <div class="form-row">
                 <button type="submit">Ajouter</button>
-            </p>
+            </div>
         </div>
     </fieldset>
 </form>
