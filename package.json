@@ -5,7 +5,7 @@
   "scripts": {
     "start": "env-cmd -f ./env/.env nodemon ./bin/www",
     "dev": "env-cmd -f ./env/.env.dev nodemon ./bin/www",
-    "prod": "env-cmd -f ./env/.env.prod nodemon ./bin/www"
+    "prod": "node ./bin/www"
   },
   "dependencies": {
     "bcrypt": "^6.0.0",
@@ -22,7 +22,6 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.18.1",
     "morgan": "^1.10.1",
-    "nodemailer": "^7.0.6",
     "nodemon": "^3.1.10",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1"

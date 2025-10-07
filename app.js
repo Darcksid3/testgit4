@@ -19,9 +19,7 @@ const logoutRouter = require('./routes/logout');
 const dashRouter = require('./routes/dashboard');
 const usersRouter = require('./routes/users');
 const catRouter = require('./routes/catways');
-//const reservRouter = require('./routes/reservation');
 
-const testRouter = require('./routes/test');
 
 const mongodb = require('./db/mongo');
 mongodb.initClientDbConnection();
@@ -31,12 +29,12 @@ const options = {
   definition: {
     openapi: '3.0.0',
     info: {
-      title: 'Nom de ton API',
+      title: 'Port de plaisance Russell',
       version: '1.0.0',
       description: 'Documentation de l’API',
     },
   },
-  apis: ['./routes/*.js'], // Chemin vers tes fichiers de routes avec les commentaires Swagger
+  apis: ['./routes/*.js'], 
 };
 
 const specs = swaggerJsdoc(options);
@@ -50,7 +48,7 @@ app.use(cors({
 
 
 //Création d'une session
-app.set('trust proxy', 1) // trust first proxy
+app.set('trust proxy', 1) 
 app.use(session({
   name: 'connect',
   secret: 'SeCr3T',  
@@ -96,9 +94,7 @@ app.use('/logout', logoutRouter);
 app.use('/dashboard', dashRouter);
 app.use('/users', usersRouter);
 app.use('/catways', catRouter);
-//app.use('/reservation', reservRouter);
 
-app.use('/test', testRouter);
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 

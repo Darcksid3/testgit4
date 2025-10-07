@@ -1,7 +1,7 @@
-// 1. Références DOM
+
 const selectElement = document.getElementById('idFind-catway-select');
 const formFindOneCatway = document.getElementById('Form_find_one_catway');
-// Récupérer le type sélectionné par défaut (qui est 'all')
+
 const initialType = document.querySelector('input[name="catwayType"]:checked').value;
 
 
@@ -10,7 +10,7 @@ async function fetchAndPopulate(catwayType) {
     // Vider les options actuelles
     selectElement.options.length = 0;
     
-    // Construction de l'URL de l'API (ex: /catways/numbers/long)
+    // Construction de l'URL de l'API 
     const url = `/catways/numbers/${catwayType}`;
 
     try {
@@ -20,7 +20,6 @@ async function fetchAndPopulate(catwayType) {
             throw new Error(`Erreur HTTP: ${response.status}`);
         }
 
-        // Le serveur renvoie un tableau de numéros [1, 2, 5, 9, ...]
         const numbersArray = await response.json(); 
 
         // Remplir la liste déroulante avec les numéros reçus
@@ -48,26 +47,18 @@ async function fetchAndPopulate(catwayType) {
     }
 }
 
-
-// --- 3. Événements ---
-
-// A. Appel initial au chargement de la page (pour remplir la liste 'all')
 document.addEventListener('DOMContentLoaded', () => {
     fetchAndPopulate(initialType);
 });
 
-
-// B. Écouteur pour le changement de bouton radio (type de catway)
 document.querySelectorAll('input[name="catwayType"]').forEach((elem) => {
     elem.addEventListener("change", function(event) {
         let item = event.target.value;
         console.log(`Type de catway sélectionné: ${item}`);
-        fetchAndPopulate(item); // Recharge la liste avec le nouveau type
+        fetchAndPopulate(item); 
     });
 });
 
-
-// C. Logique de soumission du formulaire (méthode de redirection inchangée)
 formFindOneCatway.addEventListener('submit', (e) => {
     e.preventDefault(); 
     

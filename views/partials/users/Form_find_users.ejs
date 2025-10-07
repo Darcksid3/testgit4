@@ -1,10 +1,15 @@
-<% emailFind = typeof emailFind !=='undefined' ? emailFind : 'louper@louper.net' %>
+<div class="errmess">
+    <% if (typeof session.errorMessage !== 'undefined') { %>
+        <p><%= session.errorMessage %></p>
+    <% } else {} %>
+</div>
+
 <form id="Form_find_one_users">
     <fieldset>
         <legend>Recherché un Utilisateur</legend>
         
         <p>
-            <label for="emailFind">Email: test@test.com</label>
+            <label for="emailFind">Email:</label>
             <input type="email" name="emailFind" id="emailFind" placeholder="L'email !" required />
         </p>
 
@@ -16,7 +21,12 @@
 </form>
 
 <div id="resultat" class="resultat">
-    <%= emailFind %>
+    <% if (typeof user !== 'undefined') { %>
+        <h3>Utilisateur trouvé</h3>
+        <p>Nom: <%= user.name %></p>
+        <p>Email: <%= user.email %></p>        
+        <p><a href="/users/<%= user.email %>?page=modifyUsers" class="modifier">Modifier</a></p>
+        <% } else { }%>
 </div>
 <script src="/javascripts/user_find_form.js">
 

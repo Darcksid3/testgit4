@@ -13,7 +13,7 @@ const proxy = require('express-http-proxy');
  * Get port from environment and store in Express.
  */
 
-const port = normalizePort(process.env.PORT || '3000');
+const port = normalizePort(process.env.PORT || '10000');
 app.set('port', port);
 
 /**
@@ -79,7 +79,6 @@ function onError(error) {
 }
 
 
-//app.use(proxy('http://127.0.0.1:8080'));
 
 /**
  * Event listener for HTTP server "listening" event.

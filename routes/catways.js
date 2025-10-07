@@ -1,22 +1,22 @@
 const express = require('express');
 const router = express.Router();
-const Joi = require('joi'); // Joi
 
-const catwaySchema = require('../joi/catwaySchema'); // Votre schéma Joi
-const Catway = require('../models/catway')
-const Reservation = require('../models/reservation');
-const C = require('../test/test');
 const reservationRouter = require('./reservation');
 const catwayService = require('../services/catway');
+
+const { checkJWT } = require('../middleware/private');
+router.use(checkJWT);
 
 /**
  * @swagger
  * /disponibility-check:
  *   get:
+ *     tags:
+ *       - Utilities
  *     summary: Lors de la modification d'une réservation compare la disponibilité d'un catway pour des dates données
  *     responses:
  *       200:
- *         description: renvoie si le catway est disponible ou non
+ *         description: renvoie si le catway est disponible ou non sans tenir compte de la réservation en cours
  */
 router.get('/disponibility-check', catwayService.disponibilityCheck);
 
@@ -24,10 +24,12 @@ router.get('/disponibility-check', catwayService.disponibilityCheck);
  * @swagger
  * /disponibility:
  *   get:
- *     summary: Lors de la création d'une réservation compare la disponibilité d'un catway pour des dates données
+ *     tags:
+ *       - Utilities
+ *     summary: Lors de la création d'une réservation compare la disponibilité des catways pour des dates données
  *     responses:
  *       200:
- *         description: renvoie si le catway est disponible ou non
+ *         description: renvoie les catways disponibles ou non aux dates données
  */
 router.get('/disponibility', catwayService.disponibility);
 
@@ -35,10 +37,12 @@ router.get('/disponibility', catwayService.disponibility);
  * @swagger
  * /reservations:
  *   get:
+ *     tags:
+ *       - Reservation
  *     summary: Récupère toutes les réservations
  *     responses:
  *       200:
- *         description: Liste toutes les réservations
+ *         description: Liste toutes les réservations en passant outre la sous-route
  */
 router.get('/reservations', catwayService.reservation);
 
@@ -46,6 +50,8 @@ router.get('/reservations', catwayService.reservation);
  * @swagger
  * /numbers/{type}:
  *   get:
+ *     tags:
+ *       - Utilities
  *     summary: Filtre les catways par type (short, long, all)
  *     parameters:
  *       - in: path
@@ -53,7 +59,7 @@ router.get('/reservations', catwayService.reservation);
  *         required: true
  *         schema:
  *           type: string
- *         description: Type de catway (short, long, all)
+ *           description: Type de catway (short, long, all)
  *     responses:
  *       200:
  *         description: renvoie un tableau de numéros de catways filtrés par type pour les formulaires
@@ -62,19 +68,64 @@ router.get('/numbers/:type', catwayService.numbersType);
 
 /**
  * @swagger
- * /{id}:
+ * /catways/{catwayNumber}:
  *   get:
+ *     tags:
+ *       - Catway
  *     summary: Récupère un catway par son numéro et affiche la page demandée (modifyCatway, findOneCatway)
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: number
+ *           description: Numéro du catway
+ *       - in: query
+ *         name: type
+ *         required: true
+ *         schema:
+ *           type: string
+ *           description: Type de catway (short, long, all)
  *     responses:
  *       200:
  *         description: renvoie le catway filtré
  *   put:
- *     summary: Modifie un catway par son numéro dans la base de donnée
+ *     tags:
+ *       - Catway
+ *     summary: Modifie un catway par son numéro dans la base de données
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: number
+ *           description: Numéro du catway
+ *       - in: query
+ *         name: type
+ *         required: true
+ *         schema:
+ *           type: string
+ *           description: Type de catway (short, long, all)
  *     responses:
  *       200:
  *         description: renvoie sur la liste des catways
  *   delete:
- *     summary: Supprime un catway par son numéro dans la base de donnée
+ *     tags:
+ *       - Catway
+ *     summary: Supprime un catway par son numéro dans la base de données
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: number
+ *           description: Numéro du catway
+ *       - in: query
+ *         name: type
+ *         required: true
+ *         schema:
+ *           type: string
+ *           description: Type de catway (short, long, all)
  *     responses:
  *       200:
  *         description: renvoie sur la liste des catways
@@ -85,14 +136,31 @@ router.delete('/:id', catwayService.deleteCatway);
 
 /**
  * @swagger
- * /:
+ * /catways:
  *   get:
- *     summary: Recherche tous les catways dans la base de donnée
+ *     tags:
+ *       - Catway
+ *     summary: Recherche tous les catways dans la base de données
  *     responses:
  *       200:
  *         description: renvoie la liste des catways
  *   post:
- *     summary: Ajoute un catway à la base de donnée
+ *     tags:
+ *       - Catway
+ *     summary: Ajoute un catway à la base de données
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               catwayNumber:
+ *                 type: number
+ *               catwayType:
+ *                 type: string
+ *               catwayState:   
+ *                 type: string
  *     responses:
  *       200:
  *         description: renvoie sur la liste des catways
@@ -102,16 +170,15 @@ router.post('/', catwayService.addCatway);
 
 /**
  * @swagger
- * /{idCatway}/reservations:
+ * /{catwayNumber}/reservations:
  *   get:
+ *     tags:
+ *       - Catway
  *     summary: Sous-route pour les réservations associées à un catway
  *     responses:
  *       200:
  *         description: renvoie sur les routes de réservations nécessitant l'ID du catway
  */
 router.use('/:idCatway/reservations', reservationRouter);
-
-
-
 
 module.exports = router;
