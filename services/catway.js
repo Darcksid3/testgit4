@@ -156,7 +156,7 @@ exports.findOneCatway = async (req,res,next) => {
             break;
         case 'findOneCatway' :
             session.page = 'findOneCatway';
-            res.status(200).render('pages/catways', {session: session, catway: catway})
+            res.status(200).render('pages/catways', {session: session, catway: catway, reservations: reservations});
             break;
         default :
             session.page = 'findOneCatway';
